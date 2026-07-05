@@ -1,0 +1,39 @@
+backend:
+  name: git-gateway
+  branch: main
+
+local_backend: true
+
+media_folder: src/assets/images
+public_folder: /img
+
+collections:
+  - name: category
+    label: Categorías
+    label_singular: Categoría
+    folder: src/content/category
+    create: true
+    format: yaml
+    identifier_field: name
+    summary: '{{name}}'
+    fields:
+      - { label: Nombre, name: name, widget: string }
+      - { label: Icono (FontAwesome), name: icon, widget: string, default: fa-birthday-cake }
+      - { label: Descripción, name: description, widget: text }
+      - { label: Imagen, name: image, widget: image, choose_url: false }
+
+  - name: product
+    label: Productos
+    label_singular: Producto
+    folder: src/content/product
+    create: true
+    format: yaml
+    identifier_field: name
+    summary: '{{name}} - {{category}}'
+    fields:
+      - { label: Nombre, name: name, widget: string }
+      - { label: Categoría, name: category, widget: relation, collection: category, search_fields: [name], value_field: name, display_fields: [name] }
+      - { label: Descripción, name: description, widget: text }
+      - { label: Imagen, name: image, widget: image, choose_url: false }
+      - { label: Precio, name: price, widget: string, required: false }
+      - { label: Destacado, name: destacado, widget: boolean, default: false, required: false }

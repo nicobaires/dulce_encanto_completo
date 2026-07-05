@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 
 const { category } = Astro.props;
 const allProducts = await getCollection('product');
-const products = allProducts.filter((p) => p.data.category === category.id);
+const products = allProducts.filter((p) => p.data.category === category.data.name);
 const { data } = category;
 ---
 
