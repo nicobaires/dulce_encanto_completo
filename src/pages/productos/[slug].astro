@@ -1,0 +1,68 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const categories = await getCollection('category');
+  return categories.map((c) => ({
+    params: { slug: c.id },
+    props: { category: c },
+  }));
+}
+
+const { category } = Astro.props;
+const allProducts = await getCollection('product');
+const products = allProducts.filter((p) => p.data.category === category.id);
+const { data } = category;
+---
+
+<Layout title={`${data.name} - Dulce Encanto`} description={`${data.name}: ${data.description}`}>
+  <Nav />
+
+  <section class="bg-gradient-to-br from-rose-50 to-rose-100 py-20">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+      <p class="label text-rose-400 mb-3">PRODUCTOS</p>
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-5">{data.name}</h2>
+      <p class="text-gray-700 max-w-xl mx-auto">{data.description}</p>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4">
+      {products.length > 0 ? (
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {products.map((p) => (
+            <ProductCard
+              image={p.data.image}
+              name={p.data.name}
+              description={p.data.description}
+              price={p.data.price}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="text-center text-gray-500">Próximamente más productos.</p>
+      )}
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const cards = document.querySelectorAll('.product-card');
+    cards.forEach((card) => {
+      card.addEventListener('click', function () {
+        const img = this.querySelector('img');
+        const title = this.querySelector('h3').textContent;
+        if (typeof openLightbox !== 'undefined') {
+          openLightbox(img.src, title);
+        }
+      });
+    });
+  });
+</script>

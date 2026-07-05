@@ -1,0 +1,21 @@
+---
+import { Image } from 'astro:assets';
+export interface Props {
+  image: ImageMetadata;
+  name: string;
+  description: string;
+  price?: string;
+}
+const { image, name, description, price } = Astro.props;
+---
+
+<div class="product-card fade-in bg-white rounded-xl overflow-hidden shadow-md hover:-translate-y-1.5 transition-all duration-300 hover:shadow-lg cursor-pointer">
+  <div class="relative h-56 overflow-hidden">
+    <Image src={image} alt={name} class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+  </div>
+  <div class="p-5">
+    <h3 class="text-xl font-bold text-gray-800 mb-2">{name}</h3>
+    <p class="text-sm text-gray-600 mb-3">{description}</p>
+    {price && <p class="text-rose-500 font-bold text-lg">{price}</p>}
+  </div>
+</div>

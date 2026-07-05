@@ -1,0 +1,6 @@
+name: Torta de chocolate
+category: tortas
+description: Clásica torta de chocolate con cobertura ganache. Ideal para cumpleaños.
+image: ../../assets/images/img_tortas.webp
+price: "$12.000"
+destacado: true
