@@ -1,0 +1,133 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Nav from '../../../components/Nav.svelte';
+import Footer from '../../../components/Footer.astro';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const products = await getCollection('product');
+  const categories = await getCollection('category');
+  return products.map((p) => {
+    const cat = categories.find((c) => c.data.slug === p.data.category);
+    return {
+      params: { category: cat?.id ?? 'otros', slug: p.id },
+      props: { product: p, category: cat },
+    };
+  });
+}
+
+const { product, category } = Astro.props;
+const { data } = product;
+const catName = category?.data.name ?? data.category;
+const catSlug = category?.id ?? '';
+
+function cleanPrice(price: string | undefined): string | undefined {
+  if (!price) return undefined;
+  const cleaned = price.replace(/[^0-9.,]/g, '').replace(/\./g, '');
+  return cleaned || undefined;
+}
+
+const productLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: data.name,
+  description: data.description,
+  category: catName,
+  ...(cleanPrice(data.price) ? {
+    offers: {
+      '@type': 'Offer',
+      price: cleanPrice(data.price),
+      priceCurrency: 'ARS',
+    },
+  } : {}),
+};
+---
+
+<Layout title={`${data.name} - Dulce Encanto`} description={`${data.name}: ${data.description}`}>
+  <script type="application/ld+json" set:html={JSON.stringify(productLd)} />
+  <Nav client:load />
+
+  <section class="py-16 bg-white dark:bg-gray-900">
+    <div class="max-w-6xl mx-auto px-4">
+      <nav class="mb-8 text-sm text-gray-500 dark:text-gray-400">
+        <a href="/" class="hover:text-rose-400 transition-colors">Inicio</a>
+        <span class="mx-2">/</span>
+        <a href={catSlug ? `/productos/${catSlug}` : '#'} class="hover:text-rose-400 transition-colors">{catName}</a>
+        <span class="mx-2">/</span>
+        <span class="text-gray-800 dark:text-gray-100 font-medium">{data.name}</span>
+      </nav>
+
+      <div class="grid md:grid-cols-2 gap-12 items-start">
+        <div>
+          <div id="main-image" class="rounded-2xl overflow-hidden shadow-lg dark:shadow-gray-800">
+            <Image src={data.image} alt={data.name} class="w-full h-auto object-cover" />
+          </div>
+          {data.gallery && data.gallery.length > 0 && (
+            <div class="flex gap-3 mt-4 overflow-x-auto pb-2">
+              <button data-gallery-img={data.image.src} class="gallery-thumb w-20 h-20 rounded-lg overflow-hidden border-2 border-rose-400 shrink-0 hover:opacity-80 transition-opacity">
+                <Image src={data.image} alt={data.name} class="w-full h-full object-cover" />
+              </button>
+              {data.gallery.map((img) => (
+                <button data-gallery-img={img.src} class="gallery-thumb w-20 h-20 rounded-lg overflow-hidden border-2 border-transparent hover:border-rose-300 shrink-0 hover:opacity-80 transition-all">
+                  <Image src={img} alt={`${data.name} - foto extra`} class="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div>
+          <h1 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4">{data.name}</h1>
+          <p class="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">{data.description}</p>
+
+          {data.price && (
+            <p class="text-3xl font-bold text-rose-500 mb-6">{data.price}</p>
+          )}
+
+          <a
+            href={`https://wa.me/5491123456789?text=${encodeURIComponent('Hola, me gustaría conocer más sobre ' + data.name)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex bg-[#25D366] hover:bg-[#1DA851] text-white px-8 py-3 rounded-full font-semibold items-center gap-2 transition-all duration-300 hover:-translate-y-0.5 shadow-md dark:shadow-gray-800 hover:shadow-lg dark:hover:shadow-gray-800"
+          >
+            <i class="fab fa-whatsapp"></i> Consultar por WhatsApp
+          </a>
+
+          {catSlug && (
+            <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+              <a
+                href={`/productos/${catSlug}`}
+                class="text-rose-400 hover:text-rose-600 font-medium transition-colors"
+              >
+                <i class="fas fa-arrow-left mr-2"></i> Ver todos los {catName.toLowerCase()}
+              </a>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<script>
+  document.addEventListener('astro:page-load', function () {
+    var thumbs = document.querySelectorAll('.gallery-thumb');
+    var main = document.querySelector('#main-image img');
+    if (thumbs.length > 0 && main) {
+      thumbs.forEach(function (thumb) {
+        thumb.addEventListener('click', function () {
+          var src = this.getAttribute('data-gallery-img');
+          if (src && main.getAttribute('src') !== src) {
+            main.setAttribute('src', src);
+            thumbs.forEach(function (t) { t.classList.remove('border-rose-400'); t.classList.add('border-transparent'); });
+            this.classList.remove('border-transparent');
+            this.classList.add('border-rose-400');
+          }
+        });
+      });
+    }
+  });
+</script>

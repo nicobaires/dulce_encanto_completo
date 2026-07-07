@@ -1,6 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import Nav from '../../components/Nav.astro';
+import Nav from '../../components/Nav.svelte';
 import ProductCard from '../../components/ProductCard.astro';
 import Footer from '../../components/Footer.astro';
 import { getCollection } from 'astro:content';
@@ -15,22 +15,64 @@ export async function getStaticPaths() {
 
 const { category } = Astro.props;
 const allProducts = await getCollection('product');
-const products = allProducts.filter((p) => p.data.category === category.data.name);
+const products = allProducts.filter((p) => p.data.category === category.data.slug);
 const { data } = category;
+
+function cleanPrice(price: string | undefined): string | undefined {
+  if (!price) return undefined;
+  const cleaned = price.replace(/[^0-9.,]/g, '').replace(/\./g, '');
+  return cleaned || undefined;
+}
+
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://dulceencanto.com/' },
+    { '@type': 'ListItem', position: 2, name: data.name, item: `https://dulceencanto.com/productos/${category.id}` },
+  ],
+};
+
+const productListLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: products.map((p, i) => {
+    const price = cleanPrice(p.data.price);
+    return {
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'Product',
+        name: p.data.name,
+        description: p.data.description,
+        category: data.name,
+        ...(price ? {
+          offers: {
+            '@type': 'Offer',
+            price,
+            priceCurrency: 'ARS',
+          },
+        } : {}),
+      },
+    };
+  }),
+};
 ---
 
 <Layout title={`${data.name} - Dulce Encanto`} description={`${data.name}: ${data.description}`}>
-  <Nav />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(productListLd)} />
+  <Nav client:load />
 
-  <section class="bg-gradient-to-br from-rose-50 to-rose-100 py-20">
+  <section class="bg-gradient-to-br from-rose-50 to-rose-100 dark:from-gray-800 dark:to-gray-800 py-20">
     <div class="max-w-6xl mx-auto px-4 text-center">
       <p class="label text-rose-400 mb-3">PRODUCTOS</p>
-      <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-5">{data.name}</h2>
-      <p class="text-gray-700 max-w-xl mx-auto">{data.description}</p>
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-5">{data.name}</h2>
+      <p class="text-gray-700 dark:text-gray-200 max-w-xl mx-auto">{data.description}</p>
     </div>
   </section>
 
-  <section class="py-16 bg-white">
+  <section class="py-16 bg-white dark:bg-gray-900">
     <div class="max-w-6xl mx-auto px-4">
       {products.length > 0 ? (
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -40,11 +82,12 @@ const { data } = category;
               name={p.data.name}
               description={p.data.description}
               price={p.data.price}
+              href={`/productos/${category.id}/${p.id}`}
             />
           ))}
         </div>
       ) : (
-        <p class="text-center text-gray-500">Próximamente más productos.</p>
+        <p class="text-center text-gray-500 dark:text-gray-400">Próximamente más productos.</p>
       )}
     </div>
   </section>
@@ -52,17 +95,3 @@ const { data } = category;
   <Footer />
 </Layout>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const cards = document.querySelectorAll('.product-card');
-    cards.forEach((card) => {
-      card.addEventListener('click', function () {
-        const img = this.querySelector('img');
-        const title = this.querySelector('h3').textContent;
-        if (typeof openLightbox !== 'undefined') {
-          openLightbox(img.src, title);
-        }
-      });
-    });
-  });
-</script>

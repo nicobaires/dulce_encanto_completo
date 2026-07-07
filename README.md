@@ -1,6 +1,6 @@
 # Dulce Encanto — Pastelería Artesanal
 
-Landing page para pastelería artesanal con catálogo de productos por categoría, integración de WhatsApp y CMS para gestión de contenido. Construida con [Astro](https://astro.build) + Tailwind CSS.
+Landing page para pastelería artesanal con catálogo de productos por categoría, integración de WhatsApp y CMS para gestión de contenido. Construida con [Astro](https://astro.build) + [Svelte 5](https://svelte.dev) + Tailwind CSS.
 
 ## Características
 
@@ -8,31 +8,32 @@ Landing page para pastelería artesanal con catálogo de productos por categorí
 - Páginas individuales por producto (`/productos/[categoria]/[slug]`)
 - Productos destacados en la homepage (`destacado: true`)
 - Galería múltiple de imágenes por producto
-- Sección de testimonios de clientes
-- Formulario de contacto con envío por email
+- Sección de testimonios en carrusel animado (Svelte 5)
+- Formulario de contacto reactivo con validación en vivo y envío por WhatsApp (Svelte 5)
 - Contenido gestionable desde **Decap CMS** (admin visual en `/admin/`) o editando archivos YAML directamente
 - Schema markup JSON-LD: LocalBusiness (homepage), BreadcrumbList + Product ItemList (categorías), Product individual
 - Imágenes optimizadas con `<Image />` de `astro:assets` (WebP automático, responsive)
 - View Transitions (navegación tipo SPA sin recarga) con scripts reactivados en cada navegación
 - Animaciones fade-in con Intersection Observer, stagger entre elementos y direcciones (up, left, right)
-- Menú hamburguesa responsive + modo oscuro con toggle
+- Menú hamburguesa responsive + modo oscuro con toggle gestionados desde Svelte 5 (con persistencia en localStorage)
 - Botón flotante de WhatsApp con rebote
 - Footer color chocolate (#3b302d)
 - Página 404 personalizada
 - Sitemap generado automáticamente con `@astrojs/sitemap`
 - Meta tags OG para redes sociales
-- Componentes interactivos con **Svelte 5** (reactividad con `$state`, `$derived`, validación en vivo)
+- Componentes interactivos con **Svelte 5** (reactividad con `$state`, `$derived`, transiciones con `fade`, `{#key}` para animaciones, formularios con validación reactiva)
+- Navegación con scrollspy activo y smooth scroll manejados desde Svelte
 
 ## Estructura
 
 ```
 ├── public/
 │   ├── config.yml                # Configuración de Decap CMS
-│   └── scripts/main.js           # Lógica client-side (menú, lightbox, fade-in, dark mode)
+│   └── scripts/main.js           # Lógica client-side (lightbox, fade-in, botones WhatsApp)
 ├── src/
 │   ├── assets/images/            # Imágenes originales (procesadas por Astro)
 │   ├── components/
-│   │   ├── Nav.astro             # Navegación con menú hamburguesa y toggle dark mode
+│   │   ├── Nav.svelte            # Navegación con menú, dark mode, scrollspy (Svelte 5)
 │   │   ├── Hero.astro            # Hero con imagen destacada
 │   │   ├── Productos.astro       # Grilla de categorías en homepage
 │   │   ├── Destacados.astro      # Productos destacados (destacado: true)
@@ -40,10 +41,9 @@ Landing page para pastelería artesanal con catálogo de productos por categorí
 │   │   ├── SobreMi.astro         # Sección "Sobre mí"
 │   │   ├── Pedidos.astro         # Cómo pedir (3 pasos)
 │   │   ├── Beneficios.astro      # Tarjetas de beneficios
-│   │   ├── Testimonios.astro     # Testimonios de clientes
-│   │   ├── Contacto.astro        # Formulario de contacto
-│   │   ├── Footer.astro          # Footer color chocolate
-│   │   └── Prueba.svelte        # Componente Svelte 5 de prueba (formulario reactivo)
+│   │   ├── Testimonios.svelte    # Carrusel de testimonios con transiciones (Svelte 5)
+│   │   ├── Contacto.svelte       # Formulario reactivo con validación + WhatsApp (Svelte 5)
+│   │   └── Footer.astro          # Footer color chocolate
 │   ├── content/
 │   │   ├── config.ts             # Schemas de Content Collections (category, product)
 │   │   ├── category/             # Archivos YAML de categorías
@@ -99,7 +99,7 @@ Cada producto puede tener múltiples imágenes. Desde el CMS, después de selecc
 
 ## Modo oscuro
 
-Usá el ícono de luna en la navegación para alternar entre modo claro y oscuro. La preferencia se guarda automáticamente.
+Usá el ícono de luna/sol en la navegación para alternar entre modo claro y oscuro. La preferencia se guarda automáticamente en localStorage. El estado se maneja desde el componente `Nav.svelte` con `$state` y persistencia.
 
 ## Tecnologías
 
