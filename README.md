@@ -1,43 +1,69 @@
 # Dulce Encanto — Pastelería Artesanal
 
-Landing page para pastelería artesanal con integración de WhatsApp, construida con [Astro](https://astro.build) + Tailwind CSS.
+Landing page para pastelería artesanal con catálogo de productos por categoría, integración de WhatsApp y CMS para gestión de contenido. Construida con [Astro](https://astro.build) + Tailwind CSS.
 
 ## Características
 
+- Catálogo de productos organizado por categorías con páginas dinámicas (`/productos/[slug]`)
+- Páginas individuales por producto (`/productos/[categoria]/[slug]`)
+- Productos destacados en la homepage (`destacado: true`)
+- Galería múltiple de imágenes por producto
+- Sección de testimonios de clientes
+- Formulario de contacto con envío por email
+- Contenido gestionable desde **Decap CMS** (admin visual en `/admin/`) o editando archivos YAML directamente
+- Schema markup JSON-LD: LocalBusiness (homepage), BreadcrumbList + Product ItemList (categorías), Product individual
 - Imágenes optimizadas con `<Image />` de `astro:assets` (WebP automático, responsive)
-- View Transitions (navegación tipo SPA sin recarga)
-- Lightbox en cards de productos
-- Menú hamburguesa responsive
+- View Transitions (navegación tipo SPA sin recarga) con scripts reactivados en cada navegación
+- Animaciones fade-in con Intersection Observer, stagger entre elementos y direcciones (up, left, right)
+- Menú hamburguesa responsive + modo oscuro con toggle
 - Botón flotante de WhatsApp con rebote
-- Sitemap generado automáticamente
+- Footer color chocolate (#3b302d)
+- Página 404 personalizada
+- Sitemap generado automáticamente con `@astrojs/sitemap`
 - Meta tags OG para redes sociales
+- Componentes interactivos con **Svelte 5** (reactividad con `$state`, `$derived`, validación en vivo)
 
 ## Estructura
 
 ```
 ├── public/
-│   ├── img/img_hero.webp       # Imagen para OG meta (ruta fija)
-│   └── scripts/main.js         # Lógica client-side
+│   ├── config.yml                # Configuración de Decap CMS
+│   └── scripts/main.js           # Lógica client-side (menú, lightbox, fade-in, dark mode)
 ├── src/
-│   ├── assets/images/          # Imágenes originales (procesadas por Astro)
+│   ├── assets/images/            # Imágenes originales (procesadas por Astro)
 │   ├── components/
-│   │   ├── Nav.astro           # Navegación con menú hamburguesa
-│   │   ├── Hero.astro          # Hero con imagen destacada
-│   │   ├── Productos.astro     # Catálogo de productos
-│   │   ├── SobreMi.astro       # Sección "Sobre mí"
-│   │   ├── Pedidos.astro       # Cómo pedir (3 pasos)
-│   │   ├── Beneficios.astro    # Tarjetas de beneficios
-│   │   └── Footer.astro        # Footer con año dinámico
-│   ├── data/
-│   │   └── productos.js        # Datos de productos con imports de imágenes
+│   │   ├── Nav.astro             # Navegación con menú hamburguesa y toggle dark mode
+│   │   ├── Hero.astro            # Hero con imagen destacada
+│   │   ├── Productos.astro       # Grilla de categorías en homepage
+│   │   ├── Destacados.astro      # Productos destacados (destacado: true)
+│   │   ├── ProductCard.astro     # Card de producto reutilizable (link a página individual)
+│   │   ├── SobreMi.astro         # Sección "Sobre mí"
+│   │   ├── Pedidos.astro         # Cómo pedir (3 pasos)
+│   │   ├── Beneficios.astro      # Tarjetas de beneficios
+│   │   ├── Testimonios.astro     # Testimonios de clientes
+│   │   ├── Contacto.astro        # Formulario de contacto
+│   │   ├── Footer.astro          # Footer color chocolate
+│   │   └── Prueba.svelte        # Componente Svelte 5 de prueba (formulario reactivo)
+│   ├── content/
+│   │   ├── config.ts             # Schemas de Content Collections (category, product)
+│   │   ├── category/             # Archivos YAML de categorías
+│   │   └── product/              # Archivos YAML de productos
 │   ├── layouts/
-│   │   └── Layout.astro        # Layout principal (head, metas, fonts, WhatsApp flotante, lightbox)
+│   │   └── Layout.astro          # Layout principal (head, metas, fonts, WhatsApp, lightbox, schema)
 │   ├── pages/
-│   │   └── index.astro         # Página principal
+│   │   ├── admin/
+│   │   │   ├── index.astro       # Entry point de Decap CMS
+│   │   │   └── config.yml.ts     # Endpoint GET que sirve public/config.yml
+│   │   ├── productos/
+│   │   │   ├── [category]/
+│   │   │   │   └── [slug].astro  # Página individual de producto (con galería)
+│   │   │   └── [slug].astro      # Página dinámica por categoría
+│   │   ├── 404.astro             # Página no encontrada
+│   │   └── index.astro           # Página principal
 │   └── styles/
-│       └── globals.css         # Tailwind + estilos personalizados
+│       └── globals.css           # Tailwind + estilos personalizados (fade-in, fade-in-left, fade-in-right)
 ├── astro.config.mjs
-├── tailwind.config.cjs
+├── tailwind.config.cjs           # darkMode: 'class', paleta rose custom
 └── package.json
 ```
 
@@ -46,8 +72,44 @@ Landing page para pastelería artesanal con integración de WhatsApp, construida
 | Comando | Descripción |
 |---------|-------------|
 | `pnpm run dev` | Inicia servidor de desarrollo |
+| `pnpm run dev:cms` | Inicia servidor de desarrollo + decap-server |
 | `pnpm run build` | Compila el sitio para producción en `dist/` |
 | `pnpm run preview` | Previsualiza el build de producción |
+
+## CMS Local
+
+1. Ejecutá `pnpm run dev:cms`
+2. Accedé a `http://localhost:4321/admin/`
+3. Las colecciones **Categorías** y **Productos** se gestionan desde la UI
+4. Las imágenes subidas se guardan en `src/assets/images/` y la ruta se almacena como `../../assets/images/archivo.webp` en los YAML
+
+> **Importante:** Las colecciones usan `extension: yaml` para coincidir con la extensión `.yaml` de los archivos. Por defecto Decap CMS espera `.yml`.
+
+> **Importante:** El `public_folder` está configurado como `../../assets/images` para que las rutas sean compatibles con `astro:assets`. No usar `/img/`.
+
+Para producción, cambiar `backend.name` de `proxy` a `git-gateway` en `public/config.yml`.
+
+## Productos destacados
+
+Para marcar un producto como destacado en la homepage, editá el YAML y poné `destacado: true`, o desde el CMS activá el checkbox "Destacado".
+
+## Galería de imágenes
+
+Cada producto puede tener múltiples imágenes. Desde el CMS, después de seleccionar la imagen principal, usá el campo **Galería** para agregar más fotos. En la página del producto se muestran como miniaturas clickeables.
+
+## Modo oscuro
+
+Usá el ícono de luna en la navegación para alternar entre modo claro y oscuro. La preferencia se guarda automáticamente.
+
+## Tecnologías
+
+- **Astro 5** — Framework de contenido estático
+- **Svelte 5** — Componentes reactivos interactivos (`$state`, `$derived`, etc.)
+- **@astrojs/svelte 7** — Integración oficial de Svelte para Astro
+- **Tailwind CSS 3** — Estilos utilitarios con `darkMode: 'class'`
+- **Decap CMS 3** — CMS visual (ex Netlify CMS)
+- **TypeScript** — Tipado estricto
+- **pnpm** — Gestor de paquetes
 
 ## Requisitos
 
