@@ -49,7 +49,6 @@
 </script>
 
 <nav
-  role="navigation"
   aria-label="Navegación principal"
   class="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-sm dark:shadow-gray-800 transition-colors"
 >

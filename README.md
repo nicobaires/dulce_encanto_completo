@@ -13,7 +13,7 @@ Landing page para pastelería artesanal con catálogo de productos por categorí
 - Contenido gestionable desde **Decap CMS** (admin visual en `/admin/`) o editando archivos YAML directamente
 - Schema markup JSON-LD: LocalBusiness (homepage), BreadcrumbList + Product ItemList (categorías), Product individual
 - Imágenes optimizadas con `<Image />` de `astro:assets` (WebP automático, responsive)
-- View Transitions (navegación tipo SPA sin recarga) con scripts reactivados en cada navegación
+- View Transitions (navegación tipo SPA sin recarga) con dark mode persistente gracias a `astro:before-swap`
 - Animaciones fade-in con Intersection Observer, stagger entre elementos y direcciones (up, left, right)
 - Menú hamburguesa responsive + modo oscuro con toggle gestionados desde Svelte 5 (con persistencia en localStorage)
 - Botón flotante de WhatsApp con rebote
@@ -63,6 +63,7 @@ Landing page para pastelería artesanal con catálogo de productos por categorí
 │   └── styles/
 │       └── globals.css           # Tailwind + estilos personalizados (fade-in, fade-in-left, fade-in-right)
 ├── astro.config.mjs
+├── svelte.config.js               # Preprocesador Vite para Svelte
 ├── tailwind.config.cjs           # darkMode: 'class', paleta rose custom
 └── package.json
 ```
@@ -99,7 +100,7 @@ Cada producto puede tener múltiples imágenes. Desde el CMS, después de selecc
 
 ## Modo oscuro
 
-Usá el ícono de luna/sol en la navegación para alternar entre modo claro y oscuro. La preferencia se guarda automáticamente en localStorage. El estado se maneja desde el componente `Nav.svelte` con `$state` y persistencia.
+Usá el ícono de luna/sol en la navegación para alternar entre modo claro y oscuro. La preferencia se guarda automáticamente en localStorage. La clase `dark` se aplica al `<html>` desde un script inline en el Layout para evitar el flash blanco durante ViewTransitions, y el toggle en `Nav.svelte` sincroniza el estado con `$state`.
 
 ## Tecnologías
 

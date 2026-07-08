@@ -4,9 +4,32 @@ import { ViewTransitions } from 'astro:transitions';
 export interface Props {
   title: string;
   description: string;
+  businessSchema?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, businessSchema } = Astro.props;
+
+const businessLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'Dulce Encanto',
+  description: 'Pastelería artesanal en Buenos Aires. Tortas, budines, alfajores y postres caseros hechos con amor.',
+  url: 'https://dulceencanto.com',
+  telephone: '+5491123456789',
+  image: 'https://dulceencanto.com/img/img_hero.webp',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Buenos Aires',
+    addressCountry: 'AR',
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: '+5491123456789',
+    contactType: 'customer service',
+    availableLanguage: ['Spanish'],
+  },
+  areaServed: 'Buenos Aires, Argentina',
+};
 ---
 
 <!DOCTYPE html>
@@ -31,17 +54,31 @@ const { title, description } = Astro.props;
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧁</text></svg>">
   <ViewTransitions />
+  {businessSchema && <script type="application/ld+json" set:html={JSON.stringify(businessLd)} />}
+  <script is:inline>
+    (function() {
+      function applyDark(doc) {
+        var saved = localStorage.getItem('dark-mode');
+        var shouldBeDark = saved === 'true' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        doc.documentElement.classList.toggle('dark', shouldBeDark);
+      }
+      applyDark(document);
+      document.addEventListener('astro:before-swap', function (e) {
+        applyDark(e.newDocument);
+      });
+    })();
+  </script>
 </head>
-<body class="bg-white text-gray-700">
+<body class="bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200">
   <slot />
   <script is:inline src="/scripts/main.js"></script>
 
   <div id="lightbox" role="dialog" aria-modal="true" aria-label="Vista previa del producto" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/70 p-4" onclick="if(event.target===this)closeLightbox()">
-    <div class="relative max-w-lg w-full bg-white rounded-2xl overflow-hidden shadow-2xl">
-      <button aria-label="Cerrar" onclick="closeLightbox()" class="absolute top-3 right-3 z-10 w-8 h-8 bg-white/80 hover:bg-white rounded-full flex items-center justify-center text-gray-700 text-lg transition-colors">&times;</button>
+    <div class="relative max-w-lg w-full bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-2xl">
+      <button aria-label="Cerrar" onclick="closeLightbox()" class="absolute top-3 right-3 z-10 w-8 h-8 bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 rounded-full flex items-center justify-center text-gray-700 dark:text-gray-200 text-lg transition-colors">&times;</button>
       <img id="lightbox-img" src="" alt="" class="w-full h-72 md:h-96 object-cover">
       <div class="p-5 text-center">
-        <h3 id="lightbox-title" class="text-xl font-bold text-gray-800 mb-3"></h3>
+        <h3 id="lightbox-title" class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-3"></h3>
         <a id="lightbox-wa" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex bg-rose-400 hover:bg-rose-600 text-white px-6 py-2 rounded-full text-sm font-semibold items-center gap-2 transition-all duration-300">
           <i class="fab fa-whatsapp" aria-hidden="true"></i> Pedir ahora
         </a>
@@ -49,7 +86,7 @@ const { title, description } = Astro.props;
     </div>
   </div>
 
-  <a href="https://wa.me/5491123456789" target="_blank" rel="noopener noreferrer" aria-label="Hacer pedido por WhatsApp" class="group fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#1DA851] text-white w-14 h-14 rounded-full flex items-center justify-center text-3xl transition-all duration-300 hover:-translate-y-1 shadow-lg hover:shadow-xl animate-bounce hover:animate-none">
+  <a href="https://wa.me/5491123456789" target="_blank" rel="noopener noreferrer" aria-label="Hacer pedido por WhatsApp" class="group fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#1DA851] text-white w-14 h-14 rounded-full flex items-center justify-center text-3xl transition-all duration-300 hover:-translate-y-1 shadow-lg dark:shadow-gray-800 hover:shadow-xl animate-bounce hover:animate-none">
     <i class="fab fa-whatsapp" aria-hidden="true"></i>
   </a>
 </body>

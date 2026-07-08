@@ -1,6 +1,4 @@
 <script>
-  import { fade } from 'svelte/transition';
-
   const testimonios = [
     {
       nombre: 'María',
@@ -48,24 +46,26 @@
       <h2 class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100">Lo que dicen nuestros clientes</h2>
     </div>
     <div class="max-w-3xl mx-auto relative">
-      <div class="overflow-hidden">
-        {#key current}
-          <div transition:fade={{ duration: 300 }}>
+      <div class="relative h-72 md:h-64">
+        {#each testimonios as t, i}
+          <div
+            class="absolute inset-0 transition-opacity duration-500 {i === current ? 'opacity-100' : 'opacity-0 pointer-events-none'}"
+          >
             <div class="bg-rose-50 dark:bg-gray-800 rounded-2xl p-8 md:p-10 text-center">
               <div class="flex justify-center gap-1 mb-6 text-amber-400 text-lg">
-                {#each Array(testimonios[current].estrellas) as _, i}
+                {#each Array(t.estrellas) as _, j}
                   <i class="fas fa-star" aria-hidden="true"></i>
                 {/each}
               </div>
               <p class="text-gray-600 dark:text-gray-300 text-lg md:text-xl leading-relaxed italic">
-                &ldquo;{testimonios[current].texto}&rdquo;
+                &ldquo;{t.texto}&rdquo;
               </p>
               <p class="text-gray-800 dark:text-gray-100 font-semibold mt-6 text-lg">
-                &mdash; {testimonios[current].nombre}
+                &mdash; {t.nombre}
               </p>
             </div>
           </div>
-        {/key}
+        {/each}
       </div>
 
       <button
