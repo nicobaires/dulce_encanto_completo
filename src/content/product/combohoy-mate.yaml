@@ -1,5 +1,6 @@
 name: Combo para el mate
-category: Regalos
+category: regalos
 description: Alfajores + budín + facturas. Ideal para compartir.
 image: ../../assets/images/img_regalos.webp
+disponible: true
 price: "$10.000"

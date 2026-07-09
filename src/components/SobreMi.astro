@@ -3,40 +3,40 @@ import { Image } from 'astro:assets';
 import ingredientesImg from '../assets/images/img_ingredientes.webp';
 ---
 
-<section id="sobre-mi" class="bg-rose-50 py-24 scroll-mt-20">
+<section id="sobre-mi" class="bg-rose-50 dark:bg-gray-800 py-24 scroll-mt-20">
   <div class="max-w-6xl mx-auto px-4">
     <div class="grid md:grid-cols-2 gap-12 items-center">
-      <div class="rounded-2xl overflow-hidden shadow-lg">
+      <div class="rounded-2xl overflow-hidden shadow-lg dark:shadow-gray-800">
         <Image src={ingredientesImg} alt="Pastelera de Dulce Encanto" class="w-full h-auto object-cover" />
       </div>
       <div>
         <p class="label text-rose-400 mb-3">SOBRE MÍ</p>
-        <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-5">Pasión por lo artesanal</h2>
-        <p class="text-gray-700 mb-6 leading-relaxed">Soy pastelera apasionada por los detalles y los sabores caseros. Cada receta la preparo con dedicación para que disfrutes de productos únicos y hechos con amor.</p>
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-5">Pasión por lo artesanal</h2>
+        <p class="text-gray-700 dark:text-gray-200 mb-6 leading-relaxed">Soy pastelera apasionada por los detalles y los sabores caseros. Cada receta la preparo con dedicación para que disfrutes de productos únicos y hechos con amor.</p>
         <div class="space-y-5 mb-8">
           <div class="flex gap-4 items-start">
             <i class="fas fa-star text-2xl text-rose-400 flex-shrink-0 mt-1" aria-hidden="true"></i>
             <div>
-              <h4 class="font-semibold text-gray-800 mb-1">Ingredientes seleccionados</h4>
-              <p class="text-sm text-gray-600">Calidad y frescura en cada preparación.</p>
+              <h4 class="font-semibold text-gray-800 dark:text-gray-100 mb-1">Ingredientes seleccionados</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-300">Calidad y frescura en cada preparación.</p>
             </div>
           </div>
           <div class="flex gap-4 items-start">
             <i class="fas fa-heart text-2xl text-rose-400 flex-shrink-0 mt-1" aria-hidden="true"></i>
             <div>
-              <h4 class="font-semibold text-gray-800 mb-1">Hecho con amor</h4>
-              <p class="text-sm text-gray-600">Cada producto es elaborado de manera artesanal.</p>
+              <h4 class="font-semibold text-gray-800 dark:text-gray-100 mb-1">Hecho con amor</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-300">Cada producto es elaborado de manera artesanal.</p>
             </div>
           </div>
           <div class="flex gap-4 items-start">
             <i class="fas fa-calendar text-2xl text-rose-400 flex-shrink-0 mt-1" aria-hidden="true"></i>
             <div>
-              <h4 class="font-semibold text-gray-800 mb-1">Pedidos personalizados</h4>
-              <p class="text-sm text-gray-600">Tortas y combos a tu medida.</p>
+              <h4 class="font-semibold text-gray-800 dark:text-gray-100 mb-1">Pedidos personalizados</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-300">Tortas y combos a tu medida.</p>
             </div>
           </div>
         </div>
-        <button aria-label="Conocer más sobre la pastelera" class="btn-secondary bg-rose-400 hover:bg-rose-600 text-white px-8 py-3 rounded-full font-semibold flex items-center gap-2 transition-all duration-300 hover:-translate-y-0.5 shadow-md hover:shadow-lg">
+        <button aria-label="Conocer más sobre la pastelera" class="btn-secondary bg-rose-400 hover:bg-rose-600 text-white px-8 py-3 rounded-full font-semibold flex items-center gap-2 transition-all duration-300 hover:-translate-y-0.5 shadow-md dark:shadow-gray-800 hover:shadow-lg dark:hover:shadow-gray-800">
           Conocé más sobre mí <i class="fas fa-arrow-right" aria-hidden="true"></i>
         </button>
       </div>

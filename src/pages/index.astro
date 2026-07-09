@@ -3,20 +3,38 @@ import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.svelte';
 import Hero from '../components/Hero.astro';
 import Productos from '../components/Productos.astro';
-import Destacados from '../components/Destacados.astro';
+import Destacados from '../components/Destacados.svelte';
 import SobreMi from '../components/SobreMi.astro';
 import Pedidos from '../components/Pedidos.astro';
 import Beneficios from '../components/Beneficios.astro';
 import Testimonios from '../components/Testimonios.svelte';
 import Contacto from '../components/Contacto.svelte';
 import Footer from '../components/Footer.astro';
+import { getImage } from 'astro:assets';
+import { getCollection } from 'astro:content';
+const allProducts = await getCollection('product');
+const allCategories = await getCollection('category');
+const destacados = allProducts.filter((p) => p.data.destacado);
+const cards = await Promise.all(
+  destacados.map(async (p) => {
+    const cat = allCategories.find((c) => c.data.slug === p.data.category);
+    const img = await getImage({ src: p.data.image, widths: [400, 600], formats: ['webp'] });
+    return {
+      name: p.data.name,
+      description: p.data.description,
+      price: p.data.price ?? undefined,
+      href: cat ? `/productos/${cat.id}/${p.id}` : undefined,
+      imgSrc: img.src,
+    };
+  })
+);
 ---
 
 <Layout title="Dulce Encanto - Pastelería Artesanal" description="Pastelería artesanal en Buenos Aires. Tortas, budines, alfajores y postres caseros hechos con amor. Pedí por WhatsApp." businessSchema={true}>
   <Nav client:load />
   <Hero />
   <Productos />
-  <Destacados />
+  <Destacados {cards} client:load />
   <SobreMi />
   <Pedidos />
   <Beneficios />

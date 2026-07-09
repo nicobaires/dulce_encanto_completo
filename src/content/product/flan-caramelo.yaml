@@ -1,6 +1,7 @@
 name: Flan de caramelo
-category: Postres
+category: postres
 description: Flan casero con caramelo líquido. Suave y cremoso.
 image: ../../assets/images/img_postres.webp
+disponible: true
 price: "$4.000"
 destacado: true

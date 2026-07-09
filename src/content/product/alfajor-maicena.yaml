@@ -1,6 +1,7 @@
 name: Alfajor de maicena
-category: Alfajores
+category: alfajores
 description: Clásico alfajor de maicena relleno de dulce de leche y coco rallado.
 image: ../../assets/images/img_alfajores.webp
+disponible: true
 price: "$1.200"
 destacado: true

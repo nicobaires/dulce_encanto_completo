@@ -1,5 +1,6 @@
 name: Tiramisú
-category: Postres
+category: postres
 description: Postre italiano con mascarpone, café y cacao. Porciones individuales.
 image: ../../assets/images/img_postres.webp
+disponible: true
 price: "$5.500"

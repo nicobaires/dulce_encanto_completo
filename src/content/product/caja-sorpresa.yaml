@@ -1,6 +1,7 @@
 name: Caja sorpresa
-category: Regalos
+category: regalos
 description: Selección variada de nuestros productos estrella en una caja especial.
 image: ../../assets/images/img_regalos.webp
+disponible: true
 price: "$8.000"
 destacado: true

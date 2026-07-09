@@ -1,5 +1,6 @@
 name: Torta frutal
-category: Tortas
+category: tortas
 description: Con crema pastelera y frutas de temporada. Fresca y liviana.
 image: ../../assets/images/img_tortas.webp
+disponible: true
 price: "$13.500"

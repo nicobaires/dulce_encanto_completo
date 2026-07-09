@@ -4,7 +4,7 @@ backend:
   branch: main
 
 media_folder: src/assets/images
-public_folder: /img
+public_folder: ../../assets/images
 
 collections:
   - name: category
@@ -13,10 +13,17 @@ collections:
     folder: src/content/category
     create: true
     format: yaml
-    identifier_field: name
+    extension: yaml
+    identifier_field: slug
     summary: '{{name}}'
     fields:
       - { label: Nombre, name: name, widget: string }
+      - {
+          label: Slug (usado internamente),
+          name: slug,
+          widget: string,
+          hint: 'Minúsculas, sin espacios ni acentos. Ej: alfajores. No lo cambies luego de creado o los productos vinculados quedarán huérfanos.',
+        }
       - { label: Icono (FontAwesome), name: icon, widget: string, default: fa-birthday-cake }
       - { label: Descripción, name: description, widget: text }
       - { label: Imagen, name: image, widget: image, choose_url: false }
@@ -27,12 +34,42 @@ collections:
     folder: src/content/product
     create: true
     format: yaml
+    extension: yaml
     identifier_field: name
     summary: '{{name}} - {{category}}'
     fields:
       - { label: Nombre, name: name, widget: string }
-      - { label: Categoría, name: category, widget: relation, collection: category, search_fields: [name], value_field: name, display_fields: [name] }
+      - {
+          label: Categoría,
+          name: category,
+          widget: relation,
+          collection: category,
+          search_fields: [name],
+          value_field: slug,
+          display_fields: [name],
+        }
       - { label: Descripción, name: description, widget: text }
-      - { label: Imagen, name: image, widget: image, choose_url: false }
-      - { label: Precio, name: price, widget: string, required: false }
+      - {
+          label: Imagen principal,
+          name: image,
+          widget: image,
+          choose_url: false,
+        }
+      - {
+          label: Imágenes adicionales,
+          name: gallery,
+          widget: list,
+          field: { label: Imagen, name: image, widget: image, choose_url: false },
+          required: false,
+          hint: 'Opcional. Fotos extra para la página de detalle del producto.',
+        }
+      - { label: Precio, name: price, widget: string, required: false, hint: 'Ej: $12.000 o "A consultar"'}
+      - {
+          label: Disponible,
+          name: disponible,
+          widget: boolean,
+          default: true,
+          required: false,
+          hint: 'Desmarcá para ocultar el producto temporalmente sin borrarlo.',
+        }
       - { label: Destacado, name: destacado, widget: boolean, default: false, required: false }

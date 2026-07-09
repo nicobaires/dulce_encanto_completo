@@ -4,6 +4,7 @@ const category = defineCollection({
   type: 'data',
   schema: ({ image }) => z.object({
     name: z.string(),
+    slug: z.string(),
     icon: z.string(),
     description: z.string(),
     image: image(),
@@ -17,7 +18,9 @@ const product = defineCollection({
     category: z.string(),
     description: z.string(),
     image: image(),
+    gallery: z.array(image()).optional(),
     price: z.string().optional(),
+    disponible: z.boolean().default(true),
     destacado: z.boolean().default(false),
   }),
 });

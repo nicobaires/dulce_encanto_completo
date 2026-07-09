@@ -1,6 +1,7 @@
 name: Torta personalizada
-category: Tortas
+category: tortas
 description: Diseñamos la torta ideal para tu evento. Consultanos!
 image: ../../assets/images/img_tortas.webp
+disponible: true
 price: A consultar
 destacado: true

@@ -1,5 +1,6 @@
 name: Alfajor de chocolate
-category: Alfajores
+category: alfajores
 description: Bañado en chocolate semi-amargo con relleno de dulce de leche.
 image: ../../assets/images/img_alfajores.webp
+disponible: true
 price: "$1.500"

@@ -6,7 +6,7 @@ Landing page para pastelería artesanal con catálogo de productos por categorí
 
 - Catálogo de productos organizado por categorías con páginas dinámicas (`/productos/[slug]`)
 - Páginas individuales por producto (`/productos/[categoria]/[slug]`)
-- Productos destacados en la homepage (`destacado: true`)
+- Productos destacados en carrusel interactivo en la homepage (Svelte 5)
 - Galería múltiple de imágenes por producto
 - Sección de testimonios en carrusel animado (Svelte 5)
 - Formulario de contacto reactivo con validación en vivo y envío por WhatsApp (Svelte 5)
@@ -36,7 +36,7 @@ Landing page para pastelería artesanal con catálogo de productos por categorí
 │   │   ├── Nav.svelte            # Navegación con menú, dark mode, scrollspy (Svelte 5)
 │   │   ├── Hero.astro            # Hero con imagen destacada
 │   │   ├── Productos.astro       # Grilla de categorías en homepage
-│   │   ├── Destacados.astro      # Productos destacados (destacado: true)
+│   │   ├── Destacados.svelte     # Carrusel de productos destacados (Svelte 5)
 │   │   ├── ProductCard.astro     # Card de producto reutilizable (link a página individual)
 │   │   ├── SobreMi.astro         # Sección "Sobre mí"
 │   │   ├── Pedidos.astro         # Cómo pedir (3 pasos)
