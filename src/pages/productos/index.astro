@@ -1,0 +1,57 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.svelte';
+import Footer from '../../components/Footer.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { getCollection } from 'astro:content';
+
+const allProducts = await getCollection('product');
+const allCategories = await getCollection('category');
+const disponibles = allProducts.filter((p) => p.data.disponible);
+---
+
+<Layout title="Catálogo completo - Dulce Encanto" description="Todos nuestros productos: tortas, alfajores, budines, postres y regalos.">
+  <Nav client:load />
+
+  <section class="py-20 bg-gradient-to-br from-rose-50 to-rose-100 dark:from-gray-800 dark:to-gray-800">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+      <p class="label text-rose-400 mb-3">PRODUCTOS</p>
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-5">Catálogo completo</h1>
+      <p class="text-gray-700 dark:text-gray-200 max-w-xl mx-auto">Todos nuestros productos artesanales, ordenados por categoría.</p>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white dark:bg-gray-900">
+    <div class="max-w-6xl mx-auto px-4">
+      {allCategories.map((cat) => {
+        const items = disponibles.filter((p) => p.data.category === cat.data.slug);
+        if (items.length === 0) return null;
+        return (
+          <div class="mb-16 last:mb-0">
+            <div class="flex items-center gap-4 mb-8">
+              <i class={`fas ${cat.data.icon} text-rose-400 text-2xl`} aria-hidden="true"></i>
+              <h2 class="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-100">{cat.data.name}</h2>
+              <div class="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
+              <a href={`/productos/${cat.id}`} class="text-sm text-rose-500 hover:text-rose-600 font-medium whitespace-nowrap">
+                Ver todos <i class="fas fa-arrow-right ml-1" aria-hidden="true"></i>
+              </a>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {items.map((p) => (
+                <ProductCard
+                  image={p.data.image}
+                  name={p.data.name}
+                  description={p.data.description}
+                  price={p.data.price}
+                  href={`/productos/${cat.id}/${p.id}`}
+                />
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
