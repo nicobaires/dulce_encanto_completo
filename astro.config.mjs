@@ -6,7 +6,7 @@ import svelte from '@astrojs/svelte';
 
 export default defineConfig({
   integrations: [tailwind(), sitemap(), svelte()],
-  site: 'https://dulceencanto.com',
+  site: 'https://cocina-lola.netlify.app',
   image: {
     service: { entrypoint: 'astro/assets/services/sharp' },
   },

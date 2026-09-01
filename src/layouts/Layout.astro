@@ -14,9 +14,9 @@ const businessLd = {
   '@type': 'LocalBusiness',
   name: 'Cocina LoLa',
   description: 'Pastelería artesanal en Buenos Aires. Tortas, budines, alfajores y postres caseros hechos con amor.',
-  url: 'https://dulceencanto.com',
+  url: 'https://cocina-lola.netlify.app',
   telephone: '+5491123456789',
-  image: 'https://dulceencanto.com/img/img_hero.webp',
+  image: 'https://cocina-lola.netlify.app/img/img_hero.webp',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Buenos Aires',
@@ -44,7 +44,7 @@ const businessLd = {
   <meta property="og:title" content={title}>
   <meta property="og:description" content={description}>
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://dulceencanto.com">
+  <meta property="og:url" content="https://cocina-lola.netlify.app">
   <meta property="og:image" content="/img/img_hero.webp">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -89,5 +89,17 @@ const businessLd = {
   <a href="https://wa.me/5491123456789" target="_blank" rel="noopener noreferrer" aria-label="Hacer pedido por WhatsApp" class="group fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#1DA851] text-white w-14 h-14 rounded-full flex items-center justify-center text-3xl transition-all duration-300 hover:-translate-y-1 shadow-lg dark:shadow-gray-800 hover:shadow-xl animate-bounce hover:animate-none">
     <i class="fab fa-whatsapp" aria-hidden="true"></i>
   </a>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script is:inline>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
 </body>
 </html>
