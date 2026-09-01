@@ -1,28 +1,29 @@
-# Dulce Encanto — Pastelería Artesanal
+# Cocina LoLa — Pastelería Artesanal
 
 Landing page para pastelería artesanal con catálogo de productos por categoría, integración de WhatsApp y CMS para gestión de contenido. Construida con [Astro](https://astro.build) + [Svelte 5](https://svelte.dev) + Tailwind CSS.
 
 ## Características
 
 - Catálogo de productos organizado por categorías con páginas dinámicas (`/productos/[slug]`), más página `/productos` con listado completo
-- Categorías con imágenes circulares, iconos realistas y tarjeta con sombra y hover
+- Categorías con imágenes ovaladas (`aspect-[3/4]` + `rounded-full`), ícono centrado abajo de la imagen
 - Páginas individuales por producto (`/productos/[categoria]/[slug]`)
 - Productos destacados en carrusel interactivo en la homepage (Svelte 5)
 - Galería múltiple de imágenes por producto
-- Sección de testimonios en carrusel animado (Svelte 5)
+- Sección de testimonios en carrusel animado con transiciones CSS opacity (Svelte 5)
 - Formulario de contacto reactivo con validación en vivo y envío por WhatsApp (Svelte 5)
 - Contenido gestionable desde **Decap CMS** (admin visual en `/admin/`) o editando archivos YAML directamente
 - Schema markup JSON-LD: LocalBusiness (homepage), BreadcrumbList + Product ItemList (categorías), Product individual
 - Imágenes optimizadas con `<Image />` de `astro:assets` (WebP automático, responsive)
 - View Transitions (navegación tipo SPA sin recarga) con dark mode persistente gracias a `astro:before-swap`
 - Animaciones fade-in con Intersection Observer, stagger entre elementos y direcciones (up, left, right)
+- Secciones con fondos intercalados rosa/blanco y separador decorativo con filigrana
 - Menú hamburguesa responsive + modo oscuro con toggle gestionados desde Svelte 5 (con persistencia en localStorage)
 - Botón flotante de WhatsApp con rebote
 - Footer color chocolate (#3b302d)
 - Página 404 personalizada
 - Sitemap generado automáticamente con `@astrojs/sitemap`
 - Meta tags OG para redes sociales
-- Componentes interactivos con **Svelte 5** (reactividad con `$state`, `$derived`, transiciones con `fade`, `{#key}` para animaciones, formularios con validación reactiva)
+- Componentes interactivos con **Svelte 5** (reactividad con `$state`, `$derived`, formularios con validación reactiva, carruseles con transiciones CSS)
 - Navegación con scrollspy activo y smooth scroll manejados desde Svelte
 
 ## Estructura
@@ -30,13 +31,13 @@ Landing page para pastelería artesanal con catálogo de productos por categorí
 ```
 ├── public/
 │   ├── config.yml                # Configuración de Decap CMS
-│   └── scripts/main.js           # Lógica client-side (lightbox, fade-in, botones WhatsApp)
+│   └── scripts/main.js           # Lógica client-side (lightbox, fade-in)
 ├── src/
 │   ├── assets/images/            # Imágenes originales (procesadas por Astro)
 │   ├── components/
 │   │   ├── Nav.svelte            # Navegación con menú, dark mode, scrollspy (Svelte 5)
 │   │   ├── Hero.astro            # Hero con imagen destacada
-│   │   ├── Productos.astro       # Tarjetas de categorías con imagen circular + icono + botón a /productos
+│   │   ├── Productos.astro       # Tarjetas de categorías con imagen ovalada + icono centrado + botón a /productos
 │   │   ├── Destacados.svelte     # Carrusel de productos destacados (Svelte 5)
 │   │   ├── ProductCard.astro     # Card de producto reutilizable (link a página individual)
 │   │   ├── SobreMi.astro         # Sección "Sobre mí"

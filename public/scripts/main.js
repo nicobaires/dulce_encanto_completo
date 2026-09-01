@@ -26,7 +26,7 @@ function closeLightbox() {
         document.querySelectorAll('.order-btn, .btn-primary, .btn-secondary').forEach(function (btn) {
             btn.addEventListener('click', function () {
                 var phoneNumber = '5491123456789';
-                var message = encodeURIComponent('Hola, me gustaría hacer un pedido a Dulce Encanto');
+                var message = encodeURIComponent('Hola, me gustaría hacer un pedido a Cocina LoLa');
                 window.open('https://wa.me/' + phoneNumber + '?text=' + message, '_blank');
             });
         });

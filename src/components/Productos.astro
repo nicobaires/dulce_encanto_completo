@@ -11,21 +11,21 @@ const categories = (await getCollection('category')).slice(0, 5);
       <h2 class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100">Elegí tu favorito</h2>
     </div>
 
-    <div class="flex flex-wrap justify-center gap-6">
+    <div class="flex flex-nowrap gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide justify-start md:justify-center">
       {categories.map((c) => (
         <a
           href={`/productos/${c.id}`}
-          class="group w-52 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm dark:shadow-gray-800 hover:shadow-md dark:hover:shadow-gray-800 hover:-translate-y-1.5 transition-all duration-300 overflow-hidden bg-white dark:bg-gray-900"
+          class="group w-52 rounded-2xl border border-rose-100 dark:border-gray-700 shadow-sm dark:shadow-gray-800 hover:shadow-md dark:hover:shadow-gray-800 hover:-translate-y-1.5 transition-all duration-300 overflow-hidden bg-rose-50/60 dark:bg-gray-800/60"
         >
-          <div class="relative h-48 overflow-hidden">
+          <div class="relative aspect-[3/4] w-3/4 mx-auto mt-4 rounded-full overflow-hidden shadow-md dark:shadow-gray-800">
             <Image
               src={c.data.image}
               alt={c.data.name}
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
             />
-            <div class="absolute bottom-3 right-3 w-10 h-10 bg-rose-400 rounded-full flex items-center justify-center text-white text-base shadow-md dark:shadow-gray-800">
-              <i class={`fas ${c.data.icon}`} aria-hidden="true"></i>
-            </div>
+          </div>
+          <div class="w-10 h-10 bg-rose-400 rounded-full flex items-center justify-center text-white text-base shadow-md dark:shadow-gray-800 -mt-5 mx-auto relative z-10">
+            <i class={`fas ${c.data.icon}`} aria-hidden="true"></i>
           </div>
           <div class="p-4 text-center">
             <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">{c.data.name}</h3>
@@ -35,20 +35,29 @@ const categories = (await getCollection('category')).slice(0, 5);
       ))}
     </div>
 
-    <div class="flex items-center gap-4 my-16 max-w-xl mx-auto">
-      <div class="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
-      <i class="fas fa-cake-candles text-rose-300 text-xl" aria-hidden="true"></i>
-      <div class="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
+    <div class="flex items-center my-16 max-w-xl mx-auto">
+      <div class="flex-1 h-px bg-gradient-to-l from-rose-300 via-rose-200/50 to-transparent"></div>
+      <span class="mx-2 text-rose-300/60 text-xs">❀</span>
+      <div class="w-px h-6 bg-rose-200/40 rotate-[20deg]"></div>
+      <i class="fas fa-heart text-rose-300 text-xl mx-3" aria-hidden="true"></i>
+      <div class="w-px h-6 bg-rose-200/40 -rotate-[20deg]"></div>
+      <span class="mx-2 text-rose-300/60 text-xs">❀</span>
+      <div class="flex-1 h-px bg-gradient-to-r from-rose-300 via-rose-200/50 to-transparent"></div>
     </div>
 
     <div class="text-center">
-      <a
-        href="/productos"
-        class="inline-flex items-center gap-3 bg-rose-400 hover:bg-rose-600 text-white font-semibold px-10 py-4 rounded-full transition-all duration-300 hover:-translate-y-0.5 shadow-md dark:shadow-gray-800 hover:shadow-lg dark:hover:shadow-gray-800 text-lg"
-      >
-        Ver catálogo completo
-        <i class="fas fa-arrow-right" aria-hidden="true"></i>
-      </a>
+      <div class="relative inline-flex group">
+        <span class="absolute -top-2 left-1/2 -translate-x-1/2 -translate-y-full whitespace-nowrap text-xs text-rose-400 font-medium opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 pointer-events-none">
+          Todas nuestras delicias
+        </span>
+        <a
+          href="/productos"
+          class="inline-flex items-center gap-3 bg-rose-400 hover:bg-rose-600 text-white font-semibold px-10 py-4 rounded-full transition-all duration-300 hover:-translate-y-0.5 shadow-md dark:shadow-gray-800 hover:shadow-lg dark:hover:shadow-gray-800 text-lg"
+        >
+          Ver catálogo completo
+          <i class="fas fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </div>
     </div>
   </div>
 </section>

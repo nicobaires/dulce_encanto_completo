@@ -57,7 +57,7 @@
       <a href="/" class="flex items-center gap-3 flex-shrink-0">
         <i class="fas fa-birthday-cake text-2xl text-rose-400" aria-hidden="true"></i>
         <div>
-          <h1 class="text-lg font-bold text-gray-800 dark:text-gray-100">Dulce Encanto</h1>
+          <h1 class="text-lg font-bold text-gray-800 dark:text-gray-100">Cocina LoLa</h1>
           <p class="text-xs font-semibold text-rose-400 tracking-wider">PASTELERÍA ARTESANAL</p>
         </div>
       </a>

@@ -35,7 +35,7 @@
   }
 </script>
 
-<section id="contacto" class="py-24 bg-rose-50 dark:bg-gray-800 scroll-mt-20">
+<section id="contacto" class="py-24 bg-white dark:bg-gray-900 scroll-mt-20">
   <div class="max-w-6xl mx-auto px-4">
     <div class="text-center mb-16">
       <p class="label text-rose-400 mb-3">CONTACTO</p>

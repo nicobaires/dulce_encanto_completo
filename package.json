@@ -1,5 +1,5 @@
 {
-  "name": "dulce_encanto_completo",
+  "name": "cocina_lola_completo",
   "version": "1.0.0",
   "description": "Pastelería artesanal - Landing page",
   "type": "module",
@@ -14,7 +14,7 @@
     "astro",
     "tailwindcss"
   ],
-  "author": "Dulce Encanto",
+  "author": "Cocina LoLa",
   "license": "ISC",
   "packageManager": "pnpm@10.6.1",
   "dependencies": {

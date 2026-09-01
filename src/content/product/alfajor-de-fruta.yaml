@@ -2,6 +2,6 @@ name: Alfajor de Fruta
 category: alfajores
 description: Alfajor glaceado
 image: ../../assets/images/alfajor1.webp
+price: $2000
 disponible: true
-price: "2009"
 destacado: false
