@@ -18,6 +18,8 @@
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.location.href = href;
     }
     closeMenu();
   }
