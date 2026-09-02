@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Netlify Identity Widget: el preflight de Tailwind resetea sus estilos
+   inyectados (no usa Shadow DOM), lo que puede dejar el modal invisible
+   o con tamaño/posición rota. Forzamos que quede siempre por encima y visible. */
+#netlify-identity-widget {
+    all: revert;
+    position: fixed !important;
+    z-index: 999999 !important;
+}
+
+#netlify-identity-widget * {
+    all: revert;
+    box-sizing: content-box;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
 }
