@@ -1,6 +1,10 @@
 ---
 import '../styles/globals.css';
-import { ViewTransitions } from 'astro:transitions';
+// TEMPORALMENTE DESACTIVADO: sospecha de que reejecuta scripts del body
+// (incluido el init de Netlify Identity) causando doble iframe del widget.
+// Si el bug de la invitación se soluciona sin esto, dejarlo así o reintroducir
+// con más cuidado (ej. excluyendo la home, o usando transition:persist).
+// import { ViewTransitions } from 'astro:transitions';
 export interface Props {
   title: string;
   description: string;
@@ -53,7 +57,7 @@ const businessLd = {
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧁</text></svg>">
-  <ViewTransitions />
+  <!-- <ViewTransitions /> -->
   {businessSchema && <script type="application/ld+json" set:html={JSON.stringify(businessLd)} />}
   <script is:inline>
     (function() {
@@ -93,6 +97,13 @@ const businessLd = {
 <script is:inline>
   window.addEventListener("load", () => {
     if (!window.netlifyIdentity) return;
+
+    // Guard defensivo: pase lo que pase (re-ejecución de scripts,
+    // doble carga, etc.), init() nunca debe llamarse más de una vez
+    // por documento, o el widget crea un segundo iframe y rompe el
+    // procesamiento del invite_token/recovery_token.
+    if (window.__netlifyIdentityInitialized) return;
+    window.__netlifyIdentityInitialized = true;
 
     // init() ya detecta invite_token/recovery_token/confirmation_token
     // en el hash por su cuenta y abre el modal correcto solo.
