@@ -30,11 +30,8 @@
   function prev() { current = current > 0 ? current - 1 : max; }
   function next() { current = current < max ? current + 1 : 0; }
 
-  function cardStyle(i) {
-    const gap = 24;
-    const cardPct = 100 / perView;
-    const offset = gap * i / (perView * (perView - 1) || 1);
-    return `flex: 0 0 calc(${cardPct}% - ${gap * (perView - 1) / perView}px)`;
+  function cardStyle() {
+    return `flex: 0 0 ${100 / perView}%`;
   }
 </script>
 
@@ -55,28 +52,30 @@
       <div class="relative max-w-5xl mx-auto">
         <div class="overflow-hidden">
           <div
-            class="flex gap-6 transition-transform duration-500 ease-out"
+            class="flex transition-transform duration-500 ease-out"
             style="transform: translateX(-{current * (100 / perView)}%)"
           >
             {#each cards as card, i}
               <a
                 href={card.href}
-                style={cardStyle(i)}
-                class="group bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg dark:shadow-gray-800 hover:-translate-y-1.5 transition-all duration-300 hover:shadow-xl dark:hover:shadow-gray-800 cursor-pointer block border border-gray-100 dark:border-gray-700 flex-shrink-0"
+                style={cardStyle()}
+                class="block px-3 box-border shrink-0"
               >
-                <div class="relative h-56 overflow-hidden">
-                  <img
-                    src={card.imgSrc}
-                    alt={card.name}
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div class="p-6">
-                  <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-2">{card.name}</h3>
-                  <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">{card.description}</p>
-                  {#if card.price}
-                    <p class="text-rose-500 font-bold text-lg">{card.price}</p>
-                  {/if}
+                <div class="group bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg dark:shadow-gray-800 hover:-translate-y-1.5 transition-all duration-300 hover:shadow-xl dark:hover:shadow-gray-800 cursor-pointer border border-gray-100 dark:border-gray-700 h-full">
+                  <div class="relative h-56 overflow-hidden">
+                    <img
+                      src={card.imgSrc}
+                      alt={card.name}
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-2">{card.name}</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">{card.description}</p>
+                    {#if card.price}
+                      <p class="text-rose-500 font-bold text-lg">{card.price}</p>
+                    {/if}
+                  </div>
                 </div>
               </a>
             {/each}

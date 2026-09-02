@@ -15,7 +15,7 @@ const categories = (await getCollection('category')).slice(0, 5);
       {categories.map((c) => (
         <a
           href={`/productos/${c.id}`}
-          class="group w-52 rounded-2xl border border-rose-100 dark:border-gray-700 shadow-sm dark:shadow-gray-800 hover:shadow-md dark:hover:shadow-gray-800 hover:-translate-y-1.5 transition-all duration-300 overflow-hidden bg-rose-50/60 dark:bg-gray-800/60"
+          class="group w-52 shrink-0 rounded-2xl border border-rose-100 dark:border-gray-700 shadow-sm dark:shadow-gray-800 hover:shadow-md dark:hover:shadow-gray-800 hover:-translate-y-1.5 transition-all duration-300 overflow-hidden bg-rose-50/60 dark:bg-gray-800/60"
         >
           <div class="relative aspect-[3/4] w-3/4 mx-auto mt-4 rounded-full overflow-hidden shadow-md dark:shadow-gray-800">
             <Image
