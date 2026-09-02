@@ -91,25 +91,29 @@ const businessLd = {
   </a>
 <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script is:inline>
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", (user) => {
-      if (!user) {
-        window.netlifyIdentity.on("login", () => {
-          document.location.href = "/admin/";
-        });
-      }
-    });
+  window.addEventListener("load", () => {
+    if (!window.netlifyIdentity) return;
 
-    // Esto es lo que faltaba: abrir el modal cuando hay un token de invitación
+    // Inicializar
+    window.netlifyIdentity.init();
+
+    // Si hay token de invitación o recuperación, abrir el modal
     const hash = window.location.hash;
     if (
       hash.includes("invite_token") ||
       hash.includes("recovery_token") ||
       hash.includes("confirmation_token")
     ) {
-      window.netlifyIdentity.open();
+      setTimeout(() => {
+        window.netlifyIdentity.open("signup");
+      }, 300);
     }
-  }
+
+    // Después de login, ir al admin
+    window.netlifyIdentity.on("login", () => {
+      document.location.href = "/admin/";
+    });
+  });
 </script>
 </body>
 </html>
