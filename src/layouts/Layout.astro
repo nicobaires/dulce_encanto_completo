@@ -89,17 +89,27 @@ const businessLd = {
   <a href="https://wa.me/5491123456789" target="_blank" rel="noopener noreferrer" aria-label="Hacer pedido por WhatsApp" class="group fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#1DA851] text-white w-14 h-14 rounded-full flex items-center justify-center text-3xl transition-all duration-300 hover:-translate-y-1 shadow-lg dark:shadow-gray-800 hover:shadow-xl animate-bounce hover:animate-none">
     <i class="fab fa-whatsapp" aria-hidden="true"></i>
   </a>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script is:inline>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          window.netlifyIdentity.on("login", () => {
-            document.location.href = "/admin/";
-          });
-        }
-      });
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script is:inline>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", (user) => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => {
+          document.location.href = "/admin/";
+        });
+      }
+    });
+
+    // Esto es lo que faltaba: abrir el modal cuando hay un token de invitación
+    const hash = window.location.hash;
+    if (
+      hash.includes("invite_token") ||
+      hash.includes("recovery_token") ||
+      hash.includes("confirmation_token")
+    ) {
+      window.netlifyIdentity.open();
     }
-  </script>
+  }
+</script>
 </body>
 </html>
