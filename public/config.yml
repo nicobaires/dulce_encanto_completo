@@ -62,7 +62,7 @@ collections:
           required: false,
           hint: 'Opcional. Fotos extra para la página de detalle del producto.',
         }
-      - { label: Precio, name: price, widget: string, required: false, hint: 'Ej: $12.000 o "A consultar"'}
+      - { label: Precio, name: price, widget: string, required: false, default: '', hint: 'Solo números. Ej: 1000, 12000. Se muestra como $1.000, $12.000'}
       - {
           label: Disponible,
           name: disponible,

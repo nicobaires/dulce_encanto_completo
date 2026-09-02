@@ -30,6 +30,13 @@
   function prev() { current = current > 0 ? current - 1 : max; }
   function next() { current = current < max ? current + 1 : 0; }
 
+  function formatPrice(value) {
+    if (!value) return '';
+    const num = parseInt(String(value).replace(/[^0-9]/g, ''), 10);
+    if (isNaN(num)) return '';
+    return '$' + num.toLocaleString('es-AR');
+  }
+
   function cardStyle() {
     return `flex: 0 0 ${100 / perView}%`;
   }
@@ -72,8 +79,8 @@
                   <div class="p-6">
                     <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-2">{card.name}</h3>
                     <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">{card.description}</p>
-                    {#if card.price}
-                      <p class="text-rose-500 font-bold text-lg">{card.price}</p>
+                    {#if formatPrice(card.price)}
+                      <p class="text-rose-500 font-bold text-lg">{formatPrice(card.price)}</p>
                     {/if}
                   </div>
                 </div>
