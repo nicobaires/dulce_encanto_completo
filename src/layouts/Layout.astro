@@ -45,17 +45,22 @@ const businessLd = {
   <meta name="description" content={description}>
   <meta name="keywords" content="pastelería artesanal, tortas, budines, alfajores, postres, Buenos Aires, cocina lola">
   <meta name="author" content="Cocina LoLa">
+  <link rel="canonical" href={Astro.url.href}>
   <meta property="og:title" content={title}>
   <meta property="og:description" content={description}>
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://cocina-lola.netlify.app">
-  <meta property="og:image" content="/img/img_hero.webp">
+  <meta property="og:url" content={Astro.url.href}>
+  <meta property="og:image" content="https://cocina-lola.netlify.app/img/img_hero.webp">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={title}>
+  <meta name="twitter:description" content={description}>
+  <meta name="twitter:image" content="https://cocina-lola.netlify.app/img/img_hero.webp">
   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;500;600;700&family=Montserrat:wght@500;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;500;600;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet"></noscript>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧁</text></svg>">
   <!-- <ViewTransitions /> -->
   {businessSchema && <script type="application/ld+json" set:html={JSON.stringify(businessLd)} />}
@@ -93,29 +98,29 @@ const businessLd = {
   <a href="https://wa.me/5491123456789" target="_blank" rel="noopener noreferrer" aria-label="Hacer pedido por WhatsApp" class="group fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#1DA851] text-white w-14 h-14 rounded-full flex items-center justify-center text-3xl transition-all duration-300 hover:-translate-y-1 shadow-lg dark:shadow-gray-800 hover:shadow-xl animate-bounce hover:animate-none">
     <i class="fab fa-whatsapp" aria-hidden="true"></i>
   </a>
-<script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script is:inline>
-  window.addEventListener("load", () => {
-    if (!window.netlifyIdentity) return;
+  (function() {
+    var isAdmin = window.location.pathname.indexOf('/admin') === 0;
+    var hasToken = window.location.hash.indexOf('invite_token') !== -1 ||
+                   window.location.hash.indexOf('recovery_token') !== -1 ||
+                   window.location.hash.indexOf('confirmation_token') !== -1;
+    if (!isAdmin && !hasToken) return;
 
-    // Guard defensivo: pase lo que pase (re-ejecución de scripts,
-    // doble carga, etc.), init() nunca debe llamarse más de una vez
-    // por documento, o el widget crea un segundo iframe y rompe el
-    // procesamiento del invite_token/recovery_token.
-    if (window.__netlifyIdentityInitialized) return;
-    window.__netlifyIdentityInitialized = true;
-
-    // init() ya detecta invite_token/recovery_token/confirmation_token
-    // en el hash por su cuenta y abre el modal correcto solo.
-    // NO llamar a .open() manualmente acá: pisa el estado del token
-    // y hace que el modal se abra y se cierre de inmediato.
-    window.netlifyIdentity.init();
-
-    // Después de login, ir al admin
-    window.netlifyIdentity.on("login", () => {
-      document.location.href = "/admin/";
-    });
-  });
+    var script = document.createElement('script');
+    script.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
+    script.onload = function() {
+      window.addEventListener("load", function() {
+        if (!window.netlifyIdentity) return;
+        if (window.__netlifyIdentityInitialized) return;
+        window.__netlifyIdentityInitialized = true;
+        window.netlifyIdentity.init();
+        window.netlifyIdentity.on("login", function() {
+          document.location.href = "/admin/";
+        });
+      });
+    };
+    document.body.appendChild(script);
+  })();
 </script>
 </body>
 </html>

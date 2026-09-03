@@ -34,11 +34,11 @@ const cards = await Promise.all(
   <Nav client:load />
   <Hero />
   <Productos />
-  <Destacados {cards} client:load />
+  <Destacados {cards} client:visible />
   <SobreMi />
   <Pedidos />
   <Beneficios />
-  <Testimonios client:load />
-  <Contacto client:load />
+  <Testimonios client:visible />
+  <Contacto client:idle />
   <Footer />
 </Layout>

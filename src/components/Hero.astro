@@ -8,14 +8,14 @@ import heroImg from '../assets/images/img_hero.webp';
     <div class="grid md:grid-cols-[5fr_7fr] gap-12 items-center">
       <div>
         <p class="label text-rose-400 mb-4">HECHO CON AMOR</p>
-        <h2 class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-5 leading-tight">Pastelería artesanal<br>para momentos únicos</h2>
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-5 leading-tight">Pastelería artesanal<br>para momentos únicos</h1>
         <p class="text-gray-700 dark:text-gray-200 mb-8 leading-relaxed">Tortas, budines, alfajores y más, elaborados con los mejores ingredientes y muchísima dedicación.</p>
         <!-- <button aria-label="Ver productos destacados" class="btn-primary bg-rose-400 hover:bg-rose-600 text-white px-8 py-3 rounded-full font-semibold flex items-center gap-2 transition-all duration-300 hover:-translate-y-0.5 shadow-md dark:shadow-gray-800 hover:shadow-lg dark:hover:shadow-gray-800">
           Ver productos <i class="fas fa-arrow-right" aria-hidden="true"></i>
         </button> -->
       </div>
       <div class="rounded-2xl overflow-hidden shadow-lg dark:shadow-gray-800 -mx-4 md:mx-0 scale-105 md:scale-110 origin-center">
-        <Image src={heroImg} alt="Torta de chocolate con fresas" class="w-full h-auto object-cover" />
+        <Image src={heroImg} alt="Torta de chocolate con fresas" class="w-full h-auto object-cover" loading="eager" fetchpriority="high" />
       </div>
     </div>
   </div>
