@@ -6,6 +6,8 @@
   const total = cards.length;
   const max = $derived(Math.max(0, total - perView));
 
+  let resizeTimeout = $state(null);
+
   function updatePerView() {
     const w = window.innerWidth;
     perView = w < 768 ? 1 : w < 1024 ? 2 : 3;
@@ -14,8 +16,15 @@
 
   $effect(() => {
     updatePerView();
-    window.addEventListener('resize', updatePerView);
-    return () => window.removeEventListener('resize', updatePerView);
+    function onResize() {
+      if (resizeTimeout) clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(updatePerView, 150);
+    }
+    window.addEventListener('resize', onResize);
+    return () => {
+      if (resizeTimeout) clearTimeout(resizeTimeout);
+      window.removeEventListener('resize', onResize);
+    };
   });
 
   $effect(() => {

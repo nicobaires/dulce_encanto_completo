@@ -33,16 +33,23 @@
     }
   });
 
+  let ticking = $state(false);
+  
   $effect(() => {
     function onScroll() {
-      const sections = document.querySelectorAll('section[id]');
-      let current = '';
-      sections.forEach((section) => {
-        if (window.pageYOffset >= section.offsetTop - 200) {
-          current = section.getAttribute('id');
-        }
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const sections = document.querySelectorAll('section[id]');
+        let current = '';
+        sections.forEach((section) => {
+          if (window.pageYOffset >= section.offsetTop - 200) {
+            current = section.getAttribute('id');
+          }
+        });
+        activeId = current;
+        ticking = false;
       });
-      activeId = current;
     }
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
