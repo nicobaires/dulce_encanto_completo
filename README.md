@@ -1,6 +1,9 @@
 # Cocina LoLa — Pastelería Artesanal
 
-Landing page para pastelería artesanal con catálogo de productos por categoría, integración de WhatsApp y CMS para gestión de contenido. Construida con [Astro](https://astro.build) + [Svelte 5](https://svelte.dev) + Tailwind CSS.
+Landing page para pastelería artesanal con catálogo de productos por categoría, integración de WhatsApp y CMS para gestión de contenido. Construida con [Astro](https://astro.build) + [Svelte 5](https://svelte.dev).
+
+[![CI](https://github.com/nicobaires/dulce_encanto_completo/actions/workflows/ci.yml/badge.svg)](https://github.com/nicobaires/dulce_encanto_completo/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Características
 
@@ -99,11 +102,11 @@ Para marcar un producto como destacado en la homepage, editá el YAML y poné `d
 
 ## Galería de imágenes
 
-Cada producto puede tener múltiples imágenes. Desde el CMS, después de seleccionar la imagen principal, usá el campo **Galería** para agregar más fotos. En la página del producto se muestran como miniaturas clickeables.
+Cada producto puede tener múltiples imágenes. Desde el CMS, después de seleccionar la imagen principal, usá el campo **Galería** para agregar más fotos. En la página del producto se muestran en carrusel con lightbox.
 
 ## Modo oscuro
 
-Usá el ícono de luna/sol en la navegación para alternar entre modo claro y oscuro. La preferencia se guarda automáticamente en localStorage. La clase `dark` se aplica al `<html>` desde un script inline en el Layout para evitar el flash blanco durante ViewTransitions, y el toggle en `Nav.svelte` sincroniza el estado con `$state`.
+Usá el ícono de luna/sol en la navegación para alternar entre modo claro y oscuro. La preferencia se guarda automáticamente en localStorage. La clase `dark` se aplica al `<html>` desde un script de Svelte (anti-FOUC).
 
 ## Tecnologías
 
@@ -119,3 +122,19 @@ Usá el ícono de luna/sol en la navegación para alternar entre modo claro y os
 
 - Node.js 18+
 - pnpm
+
+## Desarrollo
+
+```bash
+# Clonar repositorio
+git clone https://github.com/nicobaires/dulce_encanto_completo.git
+cd dulce_encanto_completo
+
+# Instalar dependencias
+pnpm install
+
+# Iniciar servidor de desarrollo
+pnpm run dev
+
+# Con CMS local
+pnpm run dev:cms
