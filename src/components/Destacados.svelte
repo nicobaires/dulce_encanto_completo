@@ -18,9 +18,9 @@
     updatePerView();
     function onResize() {
       if (resizeTimeout) clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(updatePerView, 150);
+      resizeTimeout = setTimeout(updatePerView, 200);
     }
-    window.addEventListener('resize', onResize);
+    window.addEventListener('resize', onResize, { passive: true });
     return () => {
       if (resizeTimeout) clearTimeout(resizeTimeout);
       window.removeEventListener('resize', onResize);
@@ -29,9 +29,10 @@
 
   $effect(() => {
     if (hover || total <= perView) return;
+    const isMobile = window.innerWidth < 768;
     const id = setInterval(() => {
       current = current >= max ? 0 : current + 1;
-    }, 5000);
+    }, isMobile ? 6000 : 5000);
     return () => clearInterval(id);
   });
 
@@ -68,7 +69,7 @@
       <div class="relative max-w-5xl mx-auto">
         <div class="overflow-hidden">
           <div
-            class="flex transition-transform duration-500 ease-out"
+            class="flex transition-transform duration-300 ease-out"
             style="transform: translateX(-{current * (100 / perView)}%)"
           >
             {#each cards as card, i}
@@ -82,7 +83,8 @@
                     <img
                       src={card.imgSrc}
                       alt={card.name}
-                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 will-change-transform"
+                      loading="lazy"
                     />
                   </div>
                   <div class="p-6">

@@ -21,7 +21,10 @@ const categories = (await getCollection('category')).slice(0, 5);
             <Image
               src={c.data.image}
               alt={c.data.name}
-              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 will-change-transform"
+              widths={[200, 300, 400, 500]}
+              sizes="(max-width: 767px) 200px, 300px"
+              loading="lazy"
             />
           </div>
           <div class="w-10 h-10 bg-rose-400 rounded-full flex items-center justify-center text-white text-base shadow-md dark:shadow-gray-800 -mt-5 mx-auto relative z-10">
