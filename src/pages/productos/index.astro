@@ -4,13 +4,14 @@ import Nav from '../../components/Nav.svelte';
 import Footer from '../../components/Footer.astro';
 import ProductCard from '../../components/ProductCard.astro';
 import { getCollection } from 'astro:content';
+import { siteInfo } from '../../data/siteInfo';
 
 const allProducts = await getCollection('product');
 const allCategories = await getCollection('category');
 const disponibles = allProducts.filter((p) => p.data.disponible);
 ---
 
-<Layout title="Catálogo completo - Cocina LoLa" description="Todos nuestros productos: tortas, alfajores, budines, postres y regalos.">
+<Layout title={`Catálogo completo - ${siteInfo.brandName}`} description="Todos nuestros productos: tortas, alfajores, budines, postres y regalos.">
   <Nav client:load />
 
   <section class="py-20 bg-gradient-to-br from-rose-50 to-rose-100 dark:from-gray-800 dark:to-gray-800">

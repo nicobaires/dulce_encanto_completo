@@ -4,6 +4,7 @@ import Nav from '../../../components/Nav.svelte';
 import Footer from '../../../components/Footer.astro';
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
+import { siteInfo } from '../../../data/siteInfo';
 
 export async function getStaticPaths() {
   const products = await getCollection('product');
@@ -41,7 +42,7 @@ const productLd = {
   name: data.name,
   description: data.description,
   category: catName,
-  brand: { '@type': 'Brand', name: 'Cocina LoLa' },
+  brand: { '@type': 'Brand', name: siteInfo.brandName },
   image: data.image.src,
   ...(cleanPrice(data.price) ? {
     offers: {
@@ -56,14 +57,14 @@ const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://cocina-lola.netlify.app/' },
-    { '@type': 'ListItem', position: 2, name: catName, item: `https://cocina-lola.netlify.app/productos/${catSlug}` },
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: `${siteInfo.siteUrl}/` },
+    { '@type': 'ListItem', position: 2, name: catName, item: `${siteInfo.siteUrl}/productos/${catSlug}` },
     { '@type': 'ListItem', position: 3, name: data.name },
   ],
 };
 ---
 
-<Layout title={`${data.name} - Cocina LoLa`} description={`${data.name}: ${data.description}`}>
+<Layout title={`${data.name} - ${siteInfo.brandName}`} description={`${data.name}: ${data.description}`}>
   <script type="application/ld+json" set:html={JSON.stringify(productLd)} />
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
   <Nav client:load />
@@ -106,7 +107,7 @@ const breadcrumbLd = {
           )}
 
           <a
-            href={`https://wa.me/5491123456789?text=${encodeURIComponent('Hola, me gustaría conocer más sobre ' + data.name)}`}
+            href={`https://wa.me/${siteInfo.contact.WhatsApp.replace('+', '')}?text=${encodeURIComponent('Hola, me gustaría conocer más sobre ' + data.name)}`}
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex bg-[#25D366] hover:bg-[#1DA851] text-white px-8 py-3 rounded-full font-semibold items-center gap-2 transition-all duration-300 hover:-translate-y-0.5 shadow-md dark:shadow-gray-800 hover:shadow-lg dark:hover:shadow-gray-800"

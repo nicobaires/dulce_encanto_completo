@@ -1,13 +1,14 @@
 ---
 import { Image } from 'astro:assets';
 import ingredientesImg from '../assets/images/img_ingredientes.webp';
+import { siteInfo } from '../data/siteInfo';
 ---
 
 <section id="sobre-mi" class="bg-white dark:bg-gray-900 py-24 scroll-mt-20">
   <div class="max-w-6xl mx-auto px-4">
     <div class="grid md:grid-cols-2 gap-12 items-center">
       <div class="rounded-2xl overflow-hidden shadow-lg dark:shadow-gray-800">
-        <Image src={ingredientesImg} alt="Pastelera de Cocina LoLa" class="w-full h-auto object-cover" />
+        <Image src={ingredientesImg} alt={`Pastelera de ${siteInfo.brandName}`} class="w-full h-auto object-cover" />
       </div>
       <div>
         <p class="label text-rose-400 mb-3">SOBRE MÍ</p>

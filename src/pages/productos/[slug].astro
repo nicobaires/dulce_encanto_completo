@@ -4,6 +4,7 @@ import Nav from '../../components/Nav.svelte';
 import ProductCard from '../../components/ProductCard.astro';
 import Footer from '../../components/Footer.astro';
 import { getCollection } from 'astro:content';
+import { siteInfo } from '../../data/siteInfo';
 
 export async function getStaticPaths() {
   const categories = await getCollection('category');
@@ -28,8 +29,8 @@ const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://cocina-lola.netlify.app/' },
-    { '@type': 'ListItem', position: 2, name: data.name, item: `https://cocina-lola.netlify.app/productos/${category.id}` },
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: `${siteInfo.siteUrl}/` },
+    { '@type': 'ListItem', position: 2, name: data.name, item: `${siteInfo.siteUrl}/productos/${category.id}` },
   ],
 };
 
@@ -59,7 +60,7 @@ const productListLd = {
 };
 ---
 
-<Layout title={`${data.name} - Cocina LoLa`} description={`${data.name}: ${data.description}`}>
+<Layout title={`${data.name} - ${siteInfo.brandName}`} description={`${data.name}: ${data.description}`}>
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
   <script type="application/ld+json" set:html={JSON.stringify(productListLd)} />
   <Nav client:load />

@@ -50,6 +50,10 @@
   function cardStyle() {
     return `flex: 0 0 ${100 / perView}%`;
   }
+
+  function onImageLoad(event) {
+    event.target.classList.remove('opacity-0');
+  }
 </script>
 
 <section
@@ -79,12 +83,13 @@
                 class="block px-3 box-border shrink-0"
               >
                 <div class="group bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg dark:shadow-gray-800 hover:-translate-y-1.5 transition-all duration-300 hover:shadow-xl dark:hover:shadow-gray-800 cursor-pointer border border-gray-100 dark:border-gray-700 h-full">
-                  <div class="relative h-56 overflow-hidden">
+                  <div class="relative h-56 overflow-hidden bg-gray-100 dark:bg-gray-800">
                     <img
                       src={card.imgSrc}
                       alt={card.name}
-                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 will-change-transform"
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 will-change-transform opacity-0 transition-opacity duration-300"
                       loading="lazy"
+                      onload={onImageLoad}
                     />
                   </div>
                   <div class="p-6">

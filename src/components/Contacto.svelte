@@ -1,4 +1,5 @@
 <script>
+  import { siteInfo } from '../data/siteInfo';
   let nombre = $state('');
   let email = $state('');
   let asunto = $state('');
@@ -31,7 +32,7 @@
     if (!valido) return;
 
     const texto = `Hola, soy ${nombre} (${email}).%0A%0AAsunto: ${encodeURIComponent(asunto)}%0A%0A${encodeURIComponent(mensaje)}`;
-    window.open(`https://wa.me/5491123456789?text=${texto}`, '_blank');
+    window.open(`https://wa.me/${siteInfo.contact.WhatsApp}?text=${texto}`, '_blank');
   }
 </script>
 

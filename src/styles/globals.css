@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Optimización de fuentes */
+@font-face {
+    font-family: 'Playfair Display';
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    font-display: swap;
+}
+
 /* Netlify Identity Widget: el preflight de Tailwind resetea sus estilos
    inyectados (no usa Shadow DOM), lo que puede dejar el modal invisible
    o con tamaño/posición rota. Forzamos que quede siempre por encima y visible. */
@@ -29,6 +45,23 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 2px;
+}
+
+/* Skeleton loading */
+@keyframes skeleton-loading {
+    0% { background-position: -200px 0; }
+    100% { background-position: calc(200px + 100%) 0; }
+}
+
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200px 100%;
+    animation: skeleton-loading 1.5s infinite;
+}
+
+.dark .skeleton {
+    background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+    background-size: 200px 100%;
 }
 
 .nav-link {
