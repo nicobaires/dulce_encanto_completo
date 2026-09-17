@@ -16,8 +16,9 @@ Landing page para pastelería artesanal con catálogo de productos por categorí
 - Formulario de contacto reactivo con validación en vivo y envío por WhatsApp (Svelte 5)
 - Contenido gestionable desde **Decap CMS** (admin visual en `/admin/`) o editando archivos YAML directamente
 - Schema markup JSON-LD: LocalBusiness (homepage), BreadcrumbList + Product ItemList (categorías), Product individual
-- Imágenes optimizadas con `<Image />` de `astro:assets` (WebP automático, responsive)
-- View Transitions (navegación tipo SPA sin recarga) con dark mode persistente gracias a `astro:before-swap`
+- Imágenes optimizadas con `<Image />` de `astro:assets` + sharp (WebP automático, responsive con `widths`/`sizes`)
+- Fuentes Google optimizadas con `preload` + `onload` (no render-blocking) y `font-display: swap`
+- View Transitions deshabilitadas temporalmente (causaba doble iframe con Netlify Identity widget)
 - Animaciones fade-in con Intersection Observer, stagger entre elementos y direcciones (up, left, right)
 - Secciones con fondos intercalados rosa/blanco y separador decorativo con filigrana
 - Menú hamburguesa responsive + modo oscuro con toggle gestionados desde Svelte 5 (con persistencia en localStorage)
@@ -34,9 +35,12 @@ Landing page para pastelería artesanal con catálogo de productos por categorí
 ```
 ├── public/
 │   ├── config.yml                # Configuración de Decap CMS
+│   ├── robots.txt                # Reglas de crawlers (bloquea /admin/)
+│   ├── img/img_hero.webp         # Imagen para Open Graph / Twitter Card
+│   ├── styles/fa-subset.css      # Font Awesome subset (28 íconos,备用 — actualmente usa CDN)
 │   └── scripts/main.js           # Lógica client-side (lightbox, fade-in)
 ├── src/
-│   ├── assets/images/            # Imágenes originales (procesadas por Astro)
+│   ├── assets/images/            # Imágenes originales (procesadas por Astro/sharp)
 │   ├── components/
 │   │   ├── Nav.svelte            # Navegación con menú, dark mode, scrollspy (Svelte 5)
 │   │   ├── Hero.astro            # Hero con imagen destacada
@@ -53,6 +57,8 @@ Landing page para pastelería artesanal con catálogo de productos por categorí
 │   │   ├── config.ts             # Schemas de Content Collections (category, product)
 │   │   ├── category/             # Archivos YAML de categorías
 │   │   └── product/              # Archivos YAML de productos
+│   ├── data/
+│   │   └── siteInfo.ts           # Config centralizada del sitio (marca, URL, contacto)
 │   ├── layouts/
 │   │   └── Layout.astro          # Layout principal (head, metas, fonts, WhatsApp, lightbox, schema)
 │   ├── pages/
@@ -67,7 +73,7 @@ Landing page para pastelería artesanal con catálogo de productos por categorí
 │   │   ├── 404.astro             # Página no encontrada
 │   │   └── index.astro           # Página principal
 │   └── styles/
-│       └── globals.css           # Tailwind + estilos personalizados (fade-in, fade-in-left, fade-in-right)
+│       └── globals.css           # Tailwind + estilos personalizados (fade-in, Netlify Identity fix)
 ├── astro.config.mjs
 ├── svelte.config.js               # Preprocesador Vite para Svelte
 ├── tailwind.config.cjs           # darkMode: 'class', paleta rose custom
@@ -94,7 +100,14 @@ Landing page para pastelería artesanal con catálogo de productos por categorí
 
 > **Importante:** El `public_folder` está configurado como `../../assets/images` para que las rutas sean compatibles con `astro:assets`. No usar `/img/`.
 
-Para producción, cambiar `backend.name` de `proxy` a `git-gateway` en `public/config.yml`.
+El backend ya está configurado como `git-gateway` en `public/config.yml` (requiere Netlify Identity habilitado en el proyecto).
+
+### Netlify Identity
+
+El widget de Netlify Identity se carga condicionalmente:
+- En `/admin/` se carga directamente en la página
+- En el sitio principal se inyecta dinámicamente solo cuando hay tokens de invitación/recuperación/confirmación en la URL
+- Un fix CSS en `globals.css` (`all: revert`) corrige el widget roto por Tailwind preflight
 
 ## Productos destacados
 
@@ -115,6 +128,7 @@ Usá el ícono de luna/sol en la navegación para alternar entre modo claro y os
 - **@astrojs/svelte 7** — Integración oficial de Svelte para Astro
 - **Tailwind CSS 3** — Estilos utilitarios con `darkMode: 'class'`
 - **Decap CMS 3** — CMS visual (ex Netlify CMS)
+- **sharp** — Procesamiento de imágenes (WebP, responsive)
 - **TypeScript** — Tipado estricto
 - **pnpm** — Gestor de paquetes
 
