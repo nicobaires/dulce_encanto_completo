@@ -1,4 +1,4 @@
-# Cocina LoLa — Pastelería Artesanal
+# Cocina LoLa — Pastelería Artesanal [web](https://cocina-lola.netlify.app/)
 
 Landing page para pastelería artesanal con catálogo de productos por categoría, integración de WhatsApp y CMS para gestión de contenido. Construida con [Astro](https://astro.build) + [Svelte 5](https://svelte.dev).
 
