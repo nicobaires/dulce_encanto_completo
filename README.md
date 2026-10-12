@@ -37,7 +37,7 @@ Landing page para pastelería artesanal con catálogo de productos por categorí
 │   ├── config.yml                # Configuración de Decap CMS
 │   ├── robots.txt                # Reglas de crawlers (bloquea /admin/)
 │   ├── img/img_hero.webp         # Imagen para Open Graph / Twitter Card
-│   ├── styles/fa-subset.css      # Font Awesome subset (28 íconos,备用 — actualmente usa CDN)
+│   ├── styles/fa-subset.css      # Font Awesome subset (28 íconos — actualmente usa CDN)
 │   └── scripts/main.js           # Lógica client-side (lightbox, fade-in)
 ├── src/
 │   ├── assets/images/            # Imágenes originales (procesadas por Astro/sharp)
