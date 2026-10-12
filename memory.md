@@ -28,3 +28,8 @@
 4. [ ] **Configuración final de producción:** Dominio propio, datos de contacto reales y Netlify Forms de respaldo.
 5. [ ] **Banner de Promociones:** Componente reactivo opcional en la Homepage.
 6. [ ] **SEO / Schema:** Marcado JSON-LD con Schema `Product` en fichas dinámicas.
+
+## 5. Subagentes Especializados
+- **Carpeta creada:** `.AGENTS/` con reglas para subagentes `SVELTE`, `ASTRO` y `LOGICA`.
+- **Propósito:** separar responsabilidades para interfaz, arquitectura y lógica de negocio sin mezclar capas.
+- **Estándar aplicado:** `Svelte 5` con runas, `Astro 5` con content collections y `Image`, y lógica pura fuera de la capa visual.

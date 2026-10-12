@@ -33,6 +33,12 @@ Landing page para pastelería artesanal con catálogo de productos por categorí
 ## Estructura
 
 ```
+├── .AGENTS/                  # Directivas de subagentes especializados (Astro, Svelte, Lógica)
+├── specs/                    # Especificaciones funcionales y criterios de aceptación (SDD)
+├── SKILLS/                   # Guías de patrones de referencia y sintaxis
+├── memory.md                 # Memoria viva del proyecto (estado, arquitectura, backlog)
+├── AGENTS.md                 # Manual de ingeniería y directivas para desarrollo con IA
+├── tasks.md                  # Checklist de tareas activas
 ├── public/
 │   ├── config.yml                # Configuración de Decap CMS
 │   ├── robots.txt                # Reglas de crawlers (bloquea /admin/)
@@ -152,3 +158,13 @@ pnpm run dev
 
 # Con CMS local
 pnpm run dev:cms
+```
+
+## Metodología de Desarrollo con IA
+
+El proyecto implementa un flujo *Spec-Driven Development* (SDD) para iteraciones asistidas por agentes:
+- **`AGENTS.md`**: Manual de ingeniería y restricciones arquitectónicas no negociables.
+- **`.AGENTS/`**: Guías de subagentes especializados (`ASTRO.md`, `SVELTE.md`, `LOGICA.md`) para separar responsabilidades entre server rendering, UI reactiva y lógica de negocio.
+- **`specs/`**: Especificaciones funcionales con criterios de aceptación previos al código.
+- **`SKILLS/`**: Patrones técnicos y de sintaxis de referencia.
+- **`memory.md`**: Memoria viva del proyecto con estado del sistema, registro de decisiones y gotchas técnicos.
