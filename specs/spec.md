@@ -13,13 +13,13 @@ En pantallas chicas, el usuario ve primero las categorías y al elegir una, ve s
 - Versión desktop (no debe cambiar).
 
 ## Criterios de aceptación
-- [ ] A 375px de ancho se listan las categorías, no los productos.
-- [ ] Al tocar una categoría se muestran solo sus productos.
-- [ ] Hay una forma clara de volver a las categorías.
-- [ ] Una categoría nueva cargada desde el CMS aparece sin tocar código.
-- [ ] Con 50 productos de prueba la interacción sigue fluida.
-- [ ] En desktop el comportamiento no cambia.
-- [ ] `pnpm build` pasa sin errores.
+- [x] A 375px de ancho se listan las categorías, no los productos.
+- [x] Al tocar una categoría se muestran solo sus productos.
+- [x] Hay una forma clara de volver a las categorías.
+- [x] Una categoría nueva cargada desde el CMS aparece sin tocar código.
+- [x] Con 50 productos de prueba la interacción sigue fluida.
+- [x] En desktop el comportamiento no cambia.
+- [x] `pnpm build` pasa sin errores.
 
 ## Cómo verificar
 1. `pnpm dev` y abrir en modo responsive a 375px.

@@ -58,12 +58,12 @@ const productListLd = {
 <Layout title={`${data.name} - ${siteInfo.brandName}`} description={`${data.name}: ${data.description}`}>
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd).replace(/</g, '\\u003c')} />
   <script type="application/ld+json" set:html={JSON.stringify(productListLd).replace(/</g, '\\u003c')} />
-  <Nav client:load />
+  <Nav client:idle />
 
   <section class="bg-gradient-to-br from-rose-50 to-rose-100 dark:from-gray-800 dark:to-gray-800 py-20">
     <div class="max-w-6xl mx-auto px-4 text-center">
       <p class="label text-rose-400 mb-3">PRODUCTOS</p>
-      <h2 class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-5">{data.name}</h2>
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-5">{data.name}</h1>
       <p class="text-gray-700 dark:text-gray-200 max-w-xl mx-auto">{data.description}</p>
     </div>
   </section>

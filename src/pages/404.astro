@@ -6,7 +6,7 @@ import { siteInfo } from '../data/siteInfo';
 ---
 
 <Layout title={`Página no encontrada - ${siteInfo.brandName}`} description="La página que buscas no existe.">
-  <Nav client:load />
+  <Nav client:idle />
   <section class="min-h-[60vh] flex items-center justify-center py-24">
     <div class="text-center max-w-lg mx-auto px-4">
       <p class="text-8xl font-bold text-rose-200 mb-4">404</p>
