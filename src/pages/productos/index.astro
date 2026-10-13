@@ -3,16 +3,52 @@ import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.svelte';
 import Footer from '../../components/Footer.astro';
 import ProductCard from '../../components/ProductCard.astro';
+import CatalogoMobile from '../../components/CatalogoMobile.svelte';
 import { getCollection } from 'astro:content';
+import { getImage } from 'astro:assets';
 import { siteInfo } from '../../data/siteInfo';
 
 const allProducts = await getCollection('product');
 const allCategories = await getCollection('category');
 const disponibles = allProducts.filter((p) => p.data.disponible);
+
+const categoriesMobileData = await Promise.all(
+  allCategories.map(async (cat) => {
+    const items = disponibles.filter((p) => p.data.category === cat.data.slug);
+    if (items.length === 0) return null;
+
+    const catImg = await getImage({ src: cat.data.image, width: 200, height: 200, format: 'webp' });
+
+    const productsData = await Promise.all(
+      items.map(async (p) => {
+        const prodImg = await getImage({ src: p.data.image, width: 400, height: 400, format: 'webp' });
+        return {
+          id: p.id,
+          name: p.data.name,
+          description: p.data.description,
+          price: p.data.price,
+          href: `/productos/${cat.id}/${p.id}`,
+          imgSrc: prodImg.src,
+        };
+      })
+    );
+
+    return {
+      id: cat.id,
+      name: cat.data.name,
+      slug: cat.data.slug,
+      icon: cat.data.icon,
+      description: cat.data.description,
+      imgSrc: catImg.src,
+      products: productsData,
+    };
+  })
+);
+const validCategories = categoriesMobileData.filter((c): c is NonNullable<typeof c> => Boolean(c));
 ---
 
 <Layout title={`Catálogo completo - ${siteInfo.brandName}`} description="Todos nuestros productos: tortas, alfajores, budines, postres y regalos.">
-  <Nav client:load />
+  <Nav client:idle />
 
   <section class="py-20 bg-gradient-to-br from-rose-50 to-rose-100 dark:from-gray-800 dark:to-gray-800">
     <div class="max-w-6xl mx-auto px-4 text-center">
@@ -24,33 +60,41 @@ const disponibles = allProducts.filter((p) => p.data.disponible);
 
   <section class="py-16 bg-white dark:bg-gray-900">
     <div class="max-w-6xl mx-auto px-4">
-      {allCategories.map((cat) => {
-        const items = disponibles.filter((p) => p.data.category === cat.data.slug);
-        if (items.length === 0) return null;
-        return (
-          <div class="mb-16 last:mb-0">
-            <div class="flex items-center gap-4 mb-8">
-              <i class={`fas ${cat.data.icon} text-rose-400 text-2xl`} aria-hidden="true"></i>
-              <h2 class="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-100">{cat.data.name}</h2>
-              <div class="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
-              <a href={`/productos/${cat.id}`} class="text-sm text-rose-500 hover:text-rose-600 font-medium whitespace-nowrap">
-                Ver todos <i class="fas fa-arrow-right ml-1" aria-hidden="true"></i>
-              </a>
+      <!-- Vista Mobile: Spec 001 (Categorías primero) -->
+      <div class="block md:hidden">
+        <CatalogoMobile client:visible categories={validCategories} />
+      </div>
+
+      <!-- Vista Desktop: Catálogo completo agrupado -->
+      <div class="hidden md:block">
+        {allCategories.map((cat) => {
+          const items = disponibles.filter((p) => p.data.category === cat.data.slug);
+          if (items.length === 0) return null;
+          return (
+            <div class="mb-16 last:mb-0">
+              <div class="flex items-center gap-4 mb-8">
+                <i class={`fas ${cat.data.icon} text-rose-400 text-2xl`} aria-hidden="true"></i>
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-100">{cat.data.name}</h2>
+                <div class="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
+                <a href={`/productos/${cat.id}`} class="text-sm text-rose-500 hover:text-rose-600 font-medium whitespace-nowrap">
+                  Ver todos <i class="fas fa-arrow-right ml-1" aria-hidden="true"></i>
+                </a>
+              </div>
+              <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {items.map((p) => (
+                  <ProductCard
+                    image={p.data.image}
+                    name={p.data.name}
+                    description={p.data.description}
+                    price={p.data.price}
+                    href={`/productos/${cat.id}/${p.id}`}
+                  />
+                ))}
+              </div>
             </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {items.map((p) => (
-                <ProductCard
-                  image={p.data.image}
-                  name={p.data.name}
-                  description={p.data.description}
-                  price={p.data.price}
-                  href={`/productos/${cat.id}/${p.id}`}
-                />
-              ))}
-            </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   </section>
 

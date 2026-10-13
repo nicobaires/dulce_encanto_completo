@@ -1,170 +1,140 @@
 # Cocina LoLa — Pastelería Artesanal [web](https://cocina-lola.netlify.app/)
 
-Landing page para pastelería artesanal con catálogo de productos por categoría, integración de WhatsApp y CMS para gestión de contenido. Construida con [Astro](https://astro.build) + [Svelte 5](https://svelte.dev).
+Landing page y catálogo interactivo para pastelería artesanal con navegación por categorías, integración directa con WhatsApp y CMS para autogestión de contenido sin costos de infraestructura. Construida con [Astro 5](https://astro.build) + [Svelte 5](https://svelte.dev) + [Tailwind CSS 3](https://tailwindcss.com).
 
 [![CI](https://github.com/nicobaires/dulce_encanto_completo/actions/workflows/ci.yml/badge.svg)](https://github.com/nicobaires/dulce_encanto_completo/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+---
+
 ## Características
 
-- Catálogo de productos organizado por categorías con páginas dinámicas (`/productos/[slug]`), más página `/productos` con listado completo
-- Categorías con imágenes ovaladas (`aspect-[3/4]` + `rounded-full`), ícono centrado abajo de la imagen
-- Páginas individuales por producto (`/productos/[categoria]/[slug]`)
-- Productos destacados en carrusel interactivo en la homepage (Svelte 5)
-- Galería múltiple de imágenes por producto
-- Sección de testimonios en carrusel animado con transiciones CSS opacity (Svelte 5)
-- Formulario de contacto reactivo con validación en vivo y envío por WhatsApp (Svelte 5)
-- Contenido gestionable desde **Decap CMS** (admin visual en `/admin/`) o editando archivos YAML directamente
-- Schema markup JSON-LD: LocalBusiness (homepage), BreadcrumbList + Product ItemList (categorías), Product individual
-- Imágenes optimizadas con `<Image />` de `astro:assets` + sharp (WebP automático, responsive con `widths`/`sizes`)
-- Fuentes Google optimizadas con `preload` + `onload` (no render-blocking) y `font-display: swap`
-- View Transitions deshabilitadas temporalmente (causaba doble iframe con Netlify Identity widget)
-- Animaciones fade-in con Intersection Observer, stagger entre elementos y direcciones (up, left, right)
-- Secciones con fondos intercalados rosa/blanco y separador decorativo con filigrana
-- Menú hamburguesa responsive + modo oscuro con toggle gestionados desde Svelte 5 (con persistencia en localStorage)
-- Botón flotante de WhatsApp con rebote
-- Footer color chocolate (#3b302d)
-- Página 404 personalizada
-- Sitemap generado automáticamente con `@astrojs/sitemap`
-- Meta tags OG para redes sociales
-- Componentes interactivos con **Svelte 5** (reactividad con `$state`, `$derived`, formularios con validación reactiva, carruseles con transiciones CSS)
-- Navegación con scrollspy activo y smooth scroll manejados desde Svelte
+- **Catálogo de productos híbrido**:
+  - Catálogo completo en `/productos` con vista optimizada para móviles (Spec 001): en pantallas chicas (<768px) lista primero las categorías con selección rápida táctil y retorno claro. En desktop mantiene la vista completa agrupada.
+  - Páginas dinámicas por categoría (`/productos/[slug]`).
+  - Fichas individuales por producto (`/productos/[categoria]/[slug]`).
+- **Carrusel de categorías en la Home ([`CategoriasCarrusel.svelte`](file:///home/nicobaires/Proyectos/CocinaLola/src/components/CategoriasCarrusel.svelte))**:
+  - En celular: *Peek effect* (asomo de la siguiente tarjeta) y swipe táctil nativo centrado con `snap-x`.
+  - En desktop: fila horizontal uniforme con flechas de navegación circulares `<` y `>` y puntos indicadores (*dots*). Nunca deja tarjetas huérfanas al crecer el catálogo.
+- **Productos destacados en carrusel ([`Destacados.svelte`](file:///home/nicobaires/Proyectos/CocinaLola/src/components/Destacados.svelte))**: carrusel interactivo con soporte de accesibilidad (pausa si la pestaña está oculta o si el usuario prefiere movimiento reducido).
+- **Galería interactiva de producto ([`GaleriaProducto.svelte`](file:///home/nicobaires/Proyectos/CocinaLola/src/components/GaleriaProducto.svelte))**: isla reactiva en Svelte 5 con selección fluida de fotos y accesibilidad.
+- **Testimonios en carrusel ([`Testimonios.svelte`](file:///home/nicobaires/Proyectos/CocinaLola/src/components/Testimonios.svelte))**: datos tipados desacoplados en `src/data/testimonials.ts` con transiciones suaves.
+- **Formulario de contacto reactivo ([`Contacto.svelte`](file:///home/nicobaires/Proyectos/CocinaLola/src/components/Contacto.svelte))**: validación reactiva en vivo, atributos A11y (`aria-label`) y derivación directa a WhatsApp con formato y codificación segura.
+- **Lógica de negocio centralizada en `src/lib/`**: funciones puras de formateo de precios (`formatPrice`, `cleanPrice`) y generador de enlaces de WhatsApp (`buildWaLink`).
+- **Contenido autogestionable con Decap CMS**: panel visual en `/admin/` sobre archivos locales YAML (arquitectura Git-based, $0 infra).
+- **SEO & Schema markup**: `LocalBusiness` en home, `BreadcrumbList` + `ItemList` en categorías y `Product` con ofertas en fichas individuales.
+- **Imágenes optimizadas**: 100% procesadas vía `astro:assets` con motor Sharp en formato WebP responsivo (`widths`/`sizes`).
+- **Modo oscuro persistente**: soporte con clase `dark` en `<html>`, selector en la barra de navegación y persistencia en `localStorage`.
+- **Accesibilidad y rendimiento**: jerarquía semántica con `<h1>` garantizado por página, fuentes Google con `preload` y sitemap automático vía `@astrojs/sitemap`.
 
-## Estructura
+---
+
+## Estructura del Proyecto
 
 ```
 ├── .agents/agents/          # Directivas de subagentes especializados (astro, svelte, logica)
-├── specs/                    # Especificaciones funcionales y criterios de aceptación (SDD)
-├── skills/                   # Guías de patrones de referencia y sintaxis
-├── memory.md                 # Memoria viva del proyecto (estado, arquitectura, backlog)
-├── AGENTS.md                 # Manual de ingeniería y directivas para desarrollo con IA
-├── tasks.md                  # Checklist de tareas activas
+├── specs/                   # Especificaciones funcionales y criterios de aceptación (SDD)
+├── skills/                  # Guías de patrones de referencia y sintaxis
+├── memory.md                # Memoria viva del proyecto (estado, arquitectura, backlog)
+├── AGENTS.md                # Manual de ingeniería y directivas para desarrollo con IA
+├── tasks.md                 # Checklist de tareas activas
+├── tsconfig.json            # Configuración estricta de TypeScript (astro/tsconfigs/strict)
 ├── public/
-│   ├── config.yml                # Configuración de Decap CMS
-│   ├── robots.txt                # Reglas de crawlers (bloquea /admin/)
-│   ├── img/img_hero.webp         # Imagen para Open Graph / Twitter Card
-│   ├── styles/fa-subset.css      # Font Awesome subset (28 íconos — actualmente usa CDN)
-│   └── scripts/main.js           # Lógica client-side (lightbox, fade-in)
+│   ├── config.yml           # Configuración de Decap CMS
+│   ├── robots.txt           # Reglas para motores de búsqueda (bloquea /admin/)
+│   ├── img/img_hero.webp    # Imagen base para Open Graph y Twitter Cards
+│   └── scripts/main.js      # Intersection Observer para animaciones fade-in
 ├── src/
-│   ├── assets/images/            # Imágenes originales (procesadas por Astro/sharp)
+│   ├── assets/images/       # Imágenes del catálogo procesadas por Astro y Sharp
 │   ├── components/
-│   │   ├── Nav.svelte            # Navegación con menú, dark mode, scrollspy (Svelte 5)
-│   │   ├── Hero.astro            # Hero con imagen destacada
-│   │   ├── Productos.astro       # Tarjetas de categorías con imagen ovalada + icono centrado + botón a /productos
-│   │   ├── Destacados.svelte     # Carrusel de productos destacados (Svelte 5)
-│   │   ├── ProductCard.astro     # Card de producto reutilizable (link a página individual)
-│   │   ├── SobreMi.astro         # Sección "Sobre mí"
-│   │   ├── Pedidos.astro         # Cómo pedir (3 pasos)
-│   │   ├── Beneficios.astro      # Tarjetas de beneficios
-│   │   ├── Testimonios.svelte    # Carrusel de testimonios con transiciones (Svelte 5)
-│   │   ├── Contacto.svelte       # Formulario reactivo con validación + WhatsApp (Svelte 5)
-│   │   └── Footer.astro          # Footer color chocolate
+│   │   ├── Nav.svelte             # Barra de navegación, modo oscuro y scrollspy (Svelte 5)
+│   │   ├── Hero.astro             # Portada de inicio con imagen hero optimizada
+│   │   ├── Productos.astro        # Sección de clásicos que monta CategoriasCarrusel
+│   │   ├── CategoriasCarrusel.svelte # Carrusel de categorías (swipe móvil + flechas desktop)
+│   │   ├── CatalogoMobile.svelte  # Catálogo móvil con categorías primero (Spec 001)
+│   │   ├── Destacados.svelte      # Carrusel de productos destacados (Svelte 5)
+│   │   ├── ProductCard.astro      # Tarjeta reutilizable de producto
+│   │   ├── GaleriaProducto.svelte # Galería interactiva con miniaturas (Svelte 5)
+│   │   ├── SobreMi.astro          # Sección "Sobre mí" con enlace suave
+│   │   ├── Pedidos.astro          # Guía de compra en 3 pasos con WhatsApp
+│   │   ├── Beneficios.astro       # Tarjetas de propuesta de valor
+│   │   ├── Testimonios.svelte     # Carrusel de testimonios (Svelte 5)
+│   │   ├── Contacto.svelte        # Formulario de contacto reactivo (Svelte 5)
+│   │   └── Footer.astro           # Pie de página con enlaces y redes sociales
 │   ├── content/
-│   │   ├── config.ts             # Schemas de Content Collections (category, product)
-│   │   ├── category/             # Archivos YAML de categorías
-│   │   └── product/              # Archivos YAML de productos
+│   │   ├── config.ts              # Schemas de Content Collections con validación Zod
+│   │   ├── category/              # Archivos YAML de categorías
+│   │   └── product/               # Archivos YAML de productos
 │   ├── data/
-│   │   └── siteInfo.ts           # Config centralizada del sitio (marca, URL, contacto)
+│   │   ├── siteInfo.ts            # Datos centralizados de la pastelería (contacto, marca)
+│   │   └── testimonials.ts        # Datos tipados de testimonios de clientes
+│   ├── lib/
+│   │   ├── price.ts               # Helpers puros formatPrice y cleanPrice
+│   │   └── whatsapp.ts            # Generador y sanitizador puro de enlaces WhatsApp
 │   ├── layouts/
-│   │   └── Layout.astro          # Layout principal (head, metas, fonts, WhatsApp, lightbox, schema)
+│   │   └── Layout.astro           # Layout maestro (HTML, head, metas, fuentes, CDN FA6)
 │   ├── pages/
 │   │   ├── admin/
-│   │   │   ├── index.astro       # Entry point de Decap CMS
-│   │   │   └── config.yml.ts     # Endpoint GET que sirve public/config.yml
+│   │   │   ├── index.astro        # Panel administrativo de Decap CMS
+│   │   │   └── config.yml.ts      # Endpoint GET que sirve public/config.yml
 │   │   ├── productos/
-│   │   │   ├── [category]/
-│   │   │   │   └── [slug].astro  # Página individual de producto (con galería)
-│   │   │   ├── index.astro       # Catálogo completo (todos los productos agrupados)
-│   │   │   └── [slug].astro      # Página dinámica por categoría
-│   │   ├── 404.astro             # Página no encontrada
-│   │   └── index.astro           # Página principal
+│   │   │   ├── index.astro        # Catálogo general (/productos)
+│   │   │   ├── [slug].astro       # Página de categoría (/productos/[categoria])
+│   │   │   └── [category]/[slug].astro # Ficha individual de producto
+│   │   ├── 404.astro              # Página de error 404 personalizada
+│   │   └── index.astro            # Página principal de inicio
 │   └── styles/
-│       └── globals.css           # Tailwind + estilos personalizados (fade-in, Netlify Identity fix)
+│       └── globals.css            # Tailwind base, utilidades de scroll y fix de Netlify CMS
 ├── astro.config.mjs
-├── svelte.config.js               # Preprocesador Vite para Svelte
-├── tailwind.config.cjs           # darkMode: 'class', paleta rose custom
+├── svelte.config.js
+├── tailwind.config.cjs
 └── package.json
 ```
 
-## Scripts
+---
+
+## Comandos y Scripts
 
 | Comando | Descripción |
-|---------|-------------|
-| `pnpm run dev` | Inicia servidor de desarrollo |
-| `pnpm run dev:cms` | Inicia servidor de desarrollo + decap-server |
-| `pnpm run build` | Compila el sitio para producción en `dist/` |
-| `pnpm run preview` | Previsualiza el build de producción |
+|---|---|
+| `pnpm run dev` | Inicia el servidor de desarrollo local de Astro |
+| `pnpm run dev:cms` | Inicia desarrollo con proxy local de Decap CMS (`decap-server`) |
+| `pnpm run build` | Compila el sitio estático para producción en `dist/` |
+| `pnpm run preview` | Previsualiza localmente el build generado en `dist/` |
+| `pnpm exec astro check` | Valida tipos y diagnóstico de componentes Astro y Svelte |
+| `pnpm exec tsc --noEmit` | Chequea el tipado estricto de TypeScript en todo el proyecto |
 
-## CMS Local
+---
 
-1. Ejecutá `pnpm run dev:cms`
-2. Accedé a `http://localhost:4321/admin/`
-3. Las colecciones **Categorías** y **Productos** se gestionan desde la UI
-4. Las imágenes subidas se guardan en `src/assets/images/` y la ruta se almacena como `../../assets/images/archivo.webp` en los YAML
+## Gestión de Contenido con Decap CMS
 
-> **Importante:** Las colecciones usan `extension: yaml` para coincidir con la extensión `.yaml` de los archivos. Por defecto Decap CMS espera `.yml`.
+1. **Modo Local**:
+   - Ejecutá `pnpm run dev:cms`.
+   - Ingresá a `http://localhost:4321/admin/`.
+   - Podés crear, modificar y eliminar categorías o productos visualmente.
+2. **Imágenes**:
+   - Las imágenes subidas por el panel se guardan en `src/assets/images/` y se almacenan automáticamente como rutas relativas `../../assets/images/archivo.webp`.
+3. **Producción**:
+   - El backend utiliza `git-gateway` conectado a Netlify Identity y GitHub.
 
-> **Importante:** El `public_folder` está configurado como `../../assets/images` para que las rutas sean compatibles con `astro:assets`. No usar `/img/`.
+---
 
-El backend ya está configurado como `git-gateway` en `public/config.yml` (requiere Netlify Identity habilitado en el proyecto).
+## Tecnologías Principales
 
-### Netlify Identity
+- **[Astro 5](https://astro.build)** — Renderizado estático de alto rendimiento y Content Collections.
+- **[Svelte 5](https://svelte.dev)** — Islas de interactividad construidas exclusivamente con **Runas** (`$state`, `$derived`, `$effect`, `$props`).
+- **[Tailwind CSS 3](https://tailwindcss.com)** — Diseño responsivo y paleta personalizada de colores.
+- **[Font Awesome 6.4](https://fontawesome.com)** — Iconografía completa vía CDN oficial.
+- **[Sharp](https://sharp.pixelplumbing.com)** — Procesamiento y conversión automática a WebP.
+- **[TypeScript](https://www.typescriptlang.org)** — Tipado estricto y seguro.
+- **[pnpm](https://pnpm.io)** — Gestión de dependencias rápida y determinista.
 
-El widget de Netlify Identity se carga condicionalmente:
-- En `/admin/` se carga directamente en la página
-- En el sitio principal se inyecta dinámicamente solo cuando hay tokens de invitación/recuperación/confirmación en la URL
-- Un fix CSS en `globals.css` (`all: revert`) corrige el widget roto por Tailwind preflight
+---
 
-## Productos destacados
+## Metodología Spec-Driven Development (SDD)
 
-Para marcar un producto como destacado en la homepage, editá el YAML y poné `destacado: true`, o desde el CMS activá el checkbox "Destacado".
-
-## Galería de imágenes
-
-Cada producto puede tener múltiples imágenes. Desde el CMS, después de seleccionar la imagen principal, usá el campo **Galería** para agregar más fotos. En la página del producto se muestran en carrusel con lightbox.
-
-## Modo oscuro
-
-Usá el ícono de luna/sol en la navegación para alternar entre modo claro y oscuro. La preferencia se guarda automáticamente en localStorage. La clase `dark` se aplica al `<html>` desde un script de Svelte (anti-FOUC).
-
-## Tecnologías
-
-- **Astro 5** — Framework de contenido estático
-- **Svelte 5** — Componentes reactivos interactivos (`$state`, `$derived`, etc.)
-- **@astrojs/svelte 7** — Integración oficial de Svelte para Astro
-- **Tailwind CSS 3** — Estilos utilitarios con `darkMode: 'class'`
-- **Decap CMS 3** — CMS visual (ex Netlify CMS)
-- **sharp** — Procesamiento de imágenes (WebP, responsive)
-- **TypeScript** — Tipado estricto
-- **pnpm** — Gestor de paquetes
-
-## Requisitos
-
-- Node.js 18+
-- pnpm
-
-## Desarrollo
-
-```bash
-# Clonar repositorio
-git clone https://github.com/nicobaires/dulce_encanto_completo.git
-cd dulce_encanto_completo
-
-# Instalar dependencias
-pnpm install
-
-# Iniciar servidor de desarrollo
-pnpm run dev
-
-# Con CMS local
-pnpm run dev:cms
-```
-
-## Metodología de Desarrollo con IA
-
-El proyecto implementa un flujo *Spec-Driven Development* (SDD) para iteraciones asistidas por agentes:
-- **`AGENTS.md`**: Manual de ingeniería y restricciones arquitectónicas no negociables.
-- **`.agents/agents/`**: Guías de subagentes especializados (`astro.md`, `svelte.md`, `logica.md`) para separar responsabilidades entre server rendering, UI reactiva y lógica de negocio.
-- **`specs/`**: Especificaciones funcionales con criterios de aceptación previos al código.
-- **`skills/`**: Patrones técnicos y de sintaxis de referencia.
-- **`memory.md`**: Memoria viva del proyecto con estado del sistema, registro de decisiones y gotchas técnicos.
+El repositorio está organizado para el trabajo colaborativo con asistentes de código basados en IA:
+* **[`AGENTS.md`](file:///home/nicobaires/Proyectos/CocinaLola/AGENTS.md)**: Manual del proyecto, estándares arquitectónicos y directivas obligatorias.
+* **[`.agents/agents/`](file:///home/nicobaires/Proyectos/CocinaLola/.agents/agents/)**: Reglas especializadas por dominio (`astro.md`, `svelte.md`, `logica.md`).
+* **[`specs/`](file:///home/nicobaires/Proyectos/CocinaLola/specs/)**: Especificaciones funcionales con criterios de aceptación previos a la implementación.
+* **[`memory.md`](file:///home/nicobaires/Proyectos/CocinaLola/memory.md)**: Memoria técnica viva con el estado del sistema, decisiones de arquitectura y backlog.

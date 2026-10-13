@@ -47,6 +47,7 @@
         <div>
           <input
             id="contacto-nombre"
+            aria-label="Tu nombre"
             type="text"
             bind:value={nombre}
             onblur={() => handleBlur('nombre')}
@@ -61,6 +62,7 @@
         <div>
           <input
             id="contacto-email"
+            aria-label="Tu correo electrónico"
             type="email"
             bind:value={email}
             onblur={() => handleBlur('email')}
@@ -75,6 +77,7 @@
         <div>
           <input
             id="contacto-asunto"
+            aria-label="Asunto del mensaje"
             type="text"
             bind:value={asunto}
             onblur={() => handleBlur('asunto')}
@@ -89,6 +92,7 @@
         <div>
           <textarea
             id="contacto-mensaje"
+            aria-label="Detalle del mensaje"
             bind:value={mensaje}
             onblur={() => handleBlur('mensaje')}
             rows="4"
