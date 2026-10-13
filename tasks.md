@@ -5,4 +5,4 @@
 - [ ] 3. Implementar vista de categorías en mobile
 - [ ] 4. Implementar filtrado al tocar una categoría + botón volver
 - [ ] 5. Verificar criterios de aceptación (incl. 50 productos)
-- [ ] 6. Actualizar `MEMORY.md`
+- [ ] 6. Actualizar `memory.md`

@@ -1,6 +1,6 @@
 # Guía Lógica de negocio — CocinaLola
 
-> Complementa a [AGENTS.md](../AGENTS.md), que prevalece en caso de conflicto. Leer al tocar lógica de negocio: filtros, transformación de datos, mensajes de WhatsApp y, cuando exista, combos de lunch.
+> Complementa a [AGENTS.md](../../AGENTS.md), que prevalece en caso de conflicto. Leer al tocar lógica de negocio: filtros, transformación de datos, mensajes de WhatsApp y, cuando exista, combos de lunch.
 
 ## Dónde va la lógica
 Funciones puras en **`src/lib/`** (carpeta a crear si no existe), un archivo por tema. Los componentes Svelte y las páginas Astro las importan; no contienen reglas de negocio propias.
@@ -31,4 +31,4 @@ Si el proyecto tiene un runner de tests (por ejemplo Vitest), cada función de `
 1. La lógica no depende de ningún componente ni de la renderización.
 2. Entradas, salidas y casos borde definidos.
 3. `pnpm run build` pasa.
-4. Si hace falta cambiar un schema de contenido, frenar y pedir confirmación (ver `ASTRO.md` y AGENTS.md).
+4. Si hace falta cambiar un schema de contenido, frenar y pedir confirmación (ver `astro.md` y AGENTS.md).

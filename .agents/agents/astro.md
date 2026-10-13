@@ -1,6 +1,6 @@
 # Guía Astro — CocinaLola
 
-> Complementa a [AGENTS.md](../AGENTS.md), que prevalece en caso de conflicto. Leer al tocar páginas, layouts, colecciones, imágenes o SEO.
+> Complementa a [AGENTS.md](../../AGENTS.md), que prevalece en caso de conflicto. Leer al tocar páginas, layouts, colecciones, imágenes o SEO.
 
 ## Alcance
 Rutas, layouts, composición de páginas, Content Collections, optimización de imágenes (`astro:assets`), SEO y metadatos.
@@ -27,7 +27,7 @@ Los datos fluyen de las colecciones (`getCollection`) o de `siteInfo.ts` hacia l
 - **Salida estática.** Sin SSR ni adaptadores salvo que se pida.
 - **Una responsabilidad por página**, consistente con su layout.
 - **Interactividad con estado de cliente** → componente Svelte, no scripts sueltos en la página.
-- **Lógica de negocio** (cálculos, armado de mensajes, transformaciones de datos) → `src/lib/`, no en layouts ni páginas. Ver `LOGICA.md`.
+- **Lógica de negocio** (cálculos, armado de mensajes, transformaciones de datos) → `src/lib/`, no en layouts ni páginas. Ver `logica.md`.
 - **Problemas de render, SEO o rutas** → resolverlos en Astro antes que en el cliente.
 - **Identidad visual:** paleta `rose` de Tailwind, secciones con fondos rosa y blanco intercalados, footer `#3b302d`. No introducir otra paleta.
 

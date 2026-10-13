@@ -1,6 +1,6 @@
 # Guía Svelte 5 — CocinaLola
 
-> Complementa a [AGENTS.md](../AGENTS.md), que prevalece en caso de conflicto. Leer solo al crear o modificar archivos `.svelte`.
+> Complementa a [AGENTS.md](../../AGENTS.md), que prevalece en caso de conflicto. Leer solo al crear o modificar archivos `.svelte`.
 
 ## Alcance
 Islas interactivas del sitio: menús, carruseles, formularios, filtros visuales, toggles y estados de carga. `localStorage` solo para preferencias visuales no críticas.

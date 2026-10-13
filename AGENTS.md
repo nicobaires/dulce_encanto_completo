@@ -21,7 +21,7 @@ Actuás como ingeniero de software senior en web moderna, bajo la supervisión d
 
 ## 3. Reglas de código
 - **Componentes Svelte** en `src/components/`, aislados. Sin lógica global dentro de componentes secundarios.
-- **Runas de Svelte 5** obligatorias: `$state`, `$derived`, `$effect`. Prohibida la sintaxis de Svelte 3/4 (`let x = 0` reactivo, `$:`, `export let`, `on:click`). Detalle en `.AGENTS/SVELTE.md`.
+- **Runas de Svelte 5** obligatorias: `$state`, `$derived`, `$effect`. Prohibida la sintaxis de Svelte 3/4 (`let x = 0` reactivo, `$:`, `export let`, `on:click`). Detalle en `.agents/agents/svelte.md`.
 - **Rutas**: convención de archivos de Astro. Las existentes son `src/pages/productos/[slug].astro` y `src/pages/productos/[category]/[slug].astro`. No crear rutas catch-all (`[...slug]`) salvo que se pida.
 - **Imágenes**:
   - En archivos `.astro`: usar `<Image />` de `astro:assets` (WebP, `widths` y `sizes`). Nunca `<img>` crudo.
@@ -61,10 +61,10 @@ Los gotchas técnicos van en `memory.md`, no en el README.
 - No tocar la configuración de Netlify Identity ni del dominio sin confirmación.
 - El contenido y las fotos actuales son de prueba: no asumir que son datos reales.
 
-## 8. Guías especializadas (`.AGENTS/`)
+## 8. Guías especializadas (`.agents/agents/`)
 Complementan este manual y no reemplazan sus reglas. En caso de conflicto prevalece, en orden: 1) este archivo, 2) la instrucción del Product Owner, 3) la guía específica.
 
 Leer cada guía solo cuando corresponda:
-- `SVELTE.md`: al crear o modificar archivos `.svelte`.
-- `ASTRO.md`: al tocar páginas, layouts, colecciones o imágenes.
-- `LOGICA.md`: al tocar lógica de negocio (precios, combos, validación de pedidos).
+- `svelte.md`: al crear o modificar archivos `.svelte`.
+- `astro.md`: al tocar páginas, layouts, colecciones o imágenes.
+- `logica.md`: al tocar lógica de negocio (precios, combos, validación de pedidos).
