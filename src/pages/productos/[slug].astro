@@ -5,6 +5,7 @@ import ProductCard from '../../components/ProductCard.astro';
 import Footer from '../../components/Footer.astro';
 import { getCollection } from 'astro:content';
 import { siteInfo } from '../../data/siteInfo';
+import { cleanPrice } from '../../lib/price';
 
 export async function getStaticPaths() {
   const categories = await getCollection('category');
@@ -16,14 +17,8 @@ export async function getStaticPaths() {
 
 const { category } = Astro.props;
 const allProducts = await getCollection('product');
-const products = allProducts.filter((p) => p.data.category === category.data.slug);
+const products = allProducts.filter((p) => p.data.category === category.data.slug && p.data.disponible);
 const { data } = category;
-
-function cleanPrice(price: string | undefined): string | undefined {
-  if (!price) return undefined;
-  const cleaned = price.replace(/[^0-9.,]/g, '').replace(/\./g, '');
-  return cleaned || undefined;
-}
 
 const breadcrumbLd = {
   '@context': 'https://schema.org',
@@ -61,8 +56,8 @@ const productListLd = {
 ---
 
 <Layout title={`${data.name} - ${siteInfo.brandName}`} description={`${data.name}: ${data.description}`}>
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
-  <script type="application/ld+json" set:html={JSON.stringify(productListLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd).replace(/</g, '\\u003c')} />
+  <script type="application/ld+json" set:html={JSON.stringify(productListLd).replace(/</g, '\\u003c')} />
   <Nav client:load />
 
   <section class="bg-gradient-to-br from-rose-50 to-rose-100 dark:from-gray-800 dark:to-gray-800 py-20">

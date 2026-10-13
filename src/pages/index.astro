@@ -15,7 +15,7 @@ import { getCollection } from 'astro:content';
 import { siteInfo } from '../data/siteInfo';
 const allProducts = await getCollection('product');
 const allCategories = await getCollection('category');
-const destacados = allProducts.filter((p) => p.data.destacado);
+const destacados = allProducts.filter((p) => p.data.destacado && p.data.disponible);
 const cards = await Promise.all(
   destacados.map(async (p) => {
     const cat = allCategories.find((c) => c.data.slug === p.data.category);

@@ -58,7 +58,7 @@ collections:
           label: Imágenes adicionales,
           name: gallery,
           widget: list,
-          field: { label: Imagen, name: image, widget: image, choose_url: false },
+          field: { label: Imagen, widget: image, choose_url: false },
           required: false,
           hint: 'Opcional. Fotos extra para la página de detalle del producto.',
         }

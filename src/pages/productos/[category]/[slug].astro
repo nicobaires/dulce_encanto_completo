@@ -2,9 +2,11 @@
 import Layout from '../../../layouts/Layout.astro';
 import Nav from '../../../components/Nav.svelte';
 import Footer from '../../../components/Footer.astro';
-import { Image } from 'astro:assets';
+import GaleriaProducto from '../../../components/GaleriaProducto.svelte';
 import { getCollection } from 'astro:content';
 import { siteInfo } from '../../../data/siteInfo';
+import { formatPrice, cleanPrice } from '../../../lib/price';
+import { buildWaLink } from '../../../lib/whatsapp';
 
 export async function getStaticPaths() {
   const products = await getCollection('product');
@@ -23,19 +25,6 @@ const { data } = product;
 const catName = category?.data.name ?? data.category;
 const catSlug = category?.id ?? '';
 
-function cleanPrice(price: string | undefined): string | undefined {
-  if (!price) return undefined;
-  const cleaned = price.replace(/[^0-9.,]/g, '').replace(/\./g, '');
-  return cleaned || undefined;
-}
-
-function formatPrice(price: string | undefined): string {
-  if (!price) return '';
-  const num = parseInt(price.replace(/[^0-9]/g, ''), 10);
-  if (isNaN(num)) return '';
-  return '$' + num.toLocaleString('es-AR');
-}
-
 const productLd = {
   '@context': 'https://schema.org',
   '@type': 'Product',
@@ -43,7 +32,7 @@ const productLd = {
   description: data.description,
   category: catName,
   brand: { '@type': 'Brand', name: siteInfo.brandName },
-  image: data.image.src,
+  image: data.image.src.startsWith('http') ? data.image.src : `${siteInfo.siteUrl}${data.image.src}`,
   ...(cleanPrice(data.price) ? {
     offers: {
       '@type': 'Offer',
@@ -65,8 +54,8 @@ const breadcrumbLd = {
 ---
 
 <Layout title={`${data.name} - ${siteInfo.brandName}`} description={`${data.name}: ${data.description}`}>
-  <script type="application/ld+json" set:html={JSON.stringify(productLd)} />
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(productLd).replace(/</g, '\\u003c')} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd).replace(/</g, '\\u003c')} />
   <Nav client:load />
 
   <section class="py-16 bg-white dark:bg-gray-900">
@@ -80,23 +69,12 @@ const breadcrumbLd = {
       </nav>
 
       <div class="grid md:grid-cols-2 gap-12 items-start">
-        <div>
-          <div id="main-image" class="rounded-2xl overflow-hidden shadow-lg dark:shadow-gray-800">
-            <Image src={data.image} alt={data.name} class="w-full h-auto object-cover" />
-          </div>
-          {data.gallery && data.gallery.length > 0 && (
-            <div class="flex gap-3 mt-4 overflow-x-auto pb-2">
-              <button data-gallery-img={data.image.src} class="gallery-thumb w-20 h-20 rounded-lg overflow-hidden border-2 border-rose-400 shrink-0 hover:opacity-80 transition-opacity">
-                <Image src={data.image} alt={data.name} class="w-full h-full object-cover" />
-              </button>
-              {data.gallery.map((img) => (
-                <button data-gallery-img={img.src} class="gallery-thumb w-20 h-20 rounded-lg overflow-hidden border-2 border-transparent hover:border-rose-300 shrink-0 hover:opacity-80 transition-all">
-                  <Image src={img} alt={`${data.name} - foto extra`} class="w-full h-full object-cover" />
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+        <GaleriaProducto
+          client:load
+          imagenPrincipal={data.image}
+          galeria={data.gallery || []}
+          nombre={data.name}
+        />
 
         <div>
           <h1 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4">{data.name}</h1>
@@ -107,7 +85,7 @@ const breadcrumbLd = {
           )}
 
           <a
-            href={`https://wa.me/${siteInfo.contact.WhatsApp.replace('+', '')}?text=${encodeURIComponent('Hola, me gustaría conocer más sobre ' + data.name)}`}
+            href={buildWaLink('Hola, me gustaría conocer más sobre ' + data.name)}
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex bg-[#25D366] hover:bg-[#1DA851] text-white px-8 py-3 rounded-full font-semibold items-center gap-2 transition-all duration-300 hover:-translate-y-0.5 shadow-md dark:shadow-gray-800 hover:shadow-lg dark:hover:shadow-gray-800"
@@ -132,23 +110,3 @@ const breadcrumbLd = {
 
   <Footer />
 </Layout>
-
-<script>
-  document.addEventListener('astro:page-load', function () {
-    var thumbs = document.querySelectorAll('.gallery-thumb');
-    var main = document.querySelector('#main-image img');
-    if (thumbs.length > 0 && main) {
-      thumbs.forEach(function (thumb) {
-        thumb.addEventListener('click', function () {
-          var src = this.getAttribute('data-gallery-img');
-          if (src && main.getAttribute('src') !== src) {
-            main.setAttribute('src', src);
-            thumbs.forEach(function (t) { t.classList.remove('border-rose-400'); t.classList.add('border-transparent'); });
-            this.classList.remove('border-transparent');
-            this.classList.add('border-rose-400');
-          }
-        });
-      });
-    }
-  });
-</script>

@@ -34,7 +34,14 @@
   }
 
   $effect(() => {
-    const id = setInterval(next, 5000);
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const id = setInterval(() => {
+      if (document.visibilityState === 'visible') {
+        next();
+      }
+    }, 5000);
     return () => clearInterval(id);
   });
 </script>

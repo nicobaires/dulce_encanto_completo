@@ -10,11 +10,12 @@
 
 ## 2. Decisiones Arquitectónicas y de Negocio
 - **Prioridad de Entrega:** No sobre-pulir el frontend indefinidamente; hay usuarias reales esperando el sitio funcional.
-- **Flujo de Conversión / Pedidos:** El formulario arma el mensaje y abre WhatsApp directamente (Netlify Forms como respaldo).
+- **Flujo de Conversión / Pedidos:** El formulario arma el mensaje y abre WhatsApp directamente (Netlify Forms como respaldo). Centralizado en `src/lib/whatsapp.ts`.
+- **Lógica de Dominio y Precios:** Centralizada en funciones puras en `src/lib/price.ts` (`formatPrice`, `cleanPrice`), sin duplicación en componentes.
 - **Alcance de Rubros:** Expansión prevista hacia panificados, prepizzas, pastas caseras y lunch/viandas ("Lunch" = catering para eventos con combos por cantidad de unidades, no menú semanal).
 - **Servidor de Contenidos ($0 Infra):** Arquitectura Git-based (Decap CMS) sobre archivos locales YAML para mantener el proyecto 100% serverless y sin costos fijos.
-- **Optimización de Imágenes:** Prohibido el uso de `<img>` HTML plano. Todas las imágenes del catálogo se procesan obligatoriamente mediante `<Image />` de `astro:assets` con motor Sharp en formato WebP responsivo.
-- **Reactividad Aislada (Svelte 5):** Carruseles (destacados y testimonios) y formulario de contacto aislados en componentes `.svelte` independientes usando exclusivamente Runas de Svelte 5 (`$state`, `$derived`, `$effect`).
+- **Optimización de Imágenes:** Prohibido el uso de `<img>` HTML plano. Todas las imágenes del catálogo se procesan obligatoriamente mediante `<Image />` de `astro:assets` con motor Sharp en formato WebP responsivo. Purgados ~9.5 MB de originales no referenciados.
+- **Iconografía:** Font Awesome 6.4.0 completo vía CDN oficial en `Layout.astro` para garantizar la correcta renderización de todos los iconos sólidos (`.fas`, `font-weight: 900`), iconos de categorías y estrellas de testimonios.
 
 ## 3. Base de Conocimiento Acumulada (Gotchas & Hacks)
 - **Netlify Identity vs View Transitions:** Las View Transitions de Astro se desactivaron temporalmente porque generaban un conflicto de doble iframe con el widget de Netlify Identity.

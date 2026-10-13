@@ -1,4 +1,6 @@
 <script>
+  import { formatPrice } from '../lib/price';
+
   let { cards } = $props();
   let current = $state(0);
   let perView = $state(1);
@@ -29,9 +31,14 @@
 
   $effect(() => {
     if (hover || total <= perView) return;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
     const isMobile = window.innerWidth < 768;
     const id = setInterval(() => {
-      current = current >= max ? 0 : current + 1;
+      if (document.visibilityState === 'visible') {
+        current = current >= max ? 0 : current + 1;
+      }
     }, isMobile ? 6000 : 5000);
     return () => clearInterval(id);
   });
@@ -39,13 +46,6 @@
   function goTo(i) { current = i; }
   function prev() { current = current > 0 ? current - 1 : max; }
   function next() { current = current < max ? current + 1 : 0; }
-
-  function formatPrice(value) {
-    if (!value) return '';
-    const num = parseInt(String(value).replace(/[^0-9]/g, ''), 10);
-    if (isNaN(num)) return '';
-    return '$' + num.toLocaleString('es-AR');
-  }
 
   function cardStyle() {
     return `flex: 0 0 ${100 / perView}%`;

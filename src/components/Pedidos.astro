@@ -1,5 +1,5 @@
 ---
-import { siteInfo } from '../data/siteInfo';
+import { buildWaLink } from '../lib/whatsapp';
 ---
 
 <section id="pedidos" class="bg-rose-50 dark:bg-gray-800 py-24 scroll-mt-20">
@@ -26,7 +26,7 @@ import { siteInfo } from '../data/siteInfo';
       </div>
     </div>
     <div class="text-center mt-12">
-      <a href={`https://wa.me/${siteInfo.contact.WhatsApp.replace('+', '')}`} target="_blank" rel="noopener noreferrer" aria-label="Pedí ahora" class="inline-flex bg-rose-400 hover:bg-rose-600 text-white px-8 py-3 rounded-full font-semibold items-center gap-2 transition-all duration-300 hover:-translate-y-0.5 shadow-md dark:shadow-gray-800 hover:shadow-lg dark:hover:shadow-gray-800">
+      <a href={buildWaLink('Hola, me gustaría hacer un pedido a Cocina LoLa')} target="_blank" rel="noopener noreferrer" aria-label="Pedí ahora" class="inline-flex bg-rose-400 hover:bg-rose-600 text-white px-8 py-3 rounded-full font-semibold items-center gap-2 transition-all duration-300 hover:-translate-y-0.5 shadow-md dark:shadow-gray-800 hover:shadow-lg dark:hover:shadow-gray-800">
         <i class="fab fa-whatsapp" aria-hidden="true"></i> Pedí ahora
       </a>
     </div>

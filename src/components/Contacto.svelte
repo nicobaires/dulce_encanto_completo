@@ -1,5 +1,5 @@
 <script>
-  import { siteInfo } from '../data/siteInfo';
+  import { buildWaLink } from '../lib/whatsapp';
   let nombre = $state('');
   let email = $state('');
   let asunto = $state('');
@@ -31,8 +31,8 @@
     touched = { nombre: true, email: true, asunto: true, mensaje: true };
     if (!valido) return;
 
-    const texto = `Hola, soy ${nombre} (${email}).%0A%0AAsunto: ${encodeURIComponent(asunto)}%0A%0A${encodeURIComponent(mensaje)}`;
-    window.open(`https://wa.me/${siteInfo.contact.WhatsApp}?text=${texto}`, '_blank');
+    const texto = `Hola, soy ${nombre.trim()} (${email.trim()}).\n\nAsunto: ${asunto.trim()}\n\n${mensaje.trim()}`;
+    window.open(buildWaLink(texto), '_blank');
   }
 </script>
 

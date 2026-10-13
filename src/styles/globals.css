@@ -2,22 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Optimización de fuentes */
-@font-face {
-    font-family: 'Playfair Display';
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Poppins';
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Montserrat';
-    font-display: swap;
-}
-
 /* Netlify Identity Widget: el preflight de Tailwind resetea sus estilos
    inyectados (no usa Shadow DOM), lo que puede dejar el modal invisible
    o con tamaño/posición rota. Forzamos que quede siempre por encima y visible. */
@@ -45,6 +29,15 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 2px;
+}
+
+/* Ocultar barra de desplazamiento en carruseles táctiles */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 /* Skeleton loading */
