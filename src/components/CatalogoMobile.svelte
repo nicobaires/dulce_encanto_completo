@@ -1,5 +1,6 @@
 <script>
   import { formatPrice } from '../lib/price';
+  import Icon from './Icon.svelte';
 
   /**
    * Componente interactivo para catálogo en dispositivos móviles (Spec 001).
@@ -53,7 +54,7 @@
             />
             <div class="absolute inset-0 bg-black/10"></div>
             <div class="absolute bottom-1 right-1 w-6 h-6 bg-rose-400 text-white rounded-full flex items-center justify-center text-xs shadow">
-              <i class={`fas ${cat.icon}`} aria-hidden="true"></i>
+              <Icon name={cat.icon} aria-hidden="true" />
             </div>
           </div>
 
@@ -71,7 +72,7 @@
             </p>
           </div>
 
-          <i class="fas fa-chevron-right text-gray-300 dark:text-gray-600 group-hover:text-rose-400 group-hover:translate-x-0.5 transition-all text-sm shrink-0" aria-hidden="true"></i>
+          <Icon name="chevron-right" class="text-gray-300 dark:text-gray-600 group-hover:text-rose-400 group-hover:translate-x-0.5 transition-all text-sm shrink-0" aria-hidden="true" />
         </button>
       {/each}
     </div>
@@ -85,7 +86,7 @@
           class="inline-flex items-center gap-2 text-sm font-semibold text-rose-500 hover:text-rose-600 bg-rose-50 dark:bg-gray-800 px-3.5 py-2 rounded-xl transition-colors active:scale-95"
           aria-label="Volver a las categorías"
         >
-          <i class="fas fa-arrow-left" aria-hidden="true"></i>
+          <Icon name="arrow-left" aria-hidden="true" />
           Volver a categorías
         </button>
 
@@ -93,13 +94,13 @@
           href={`/productos/${selectedCategory.id}`}
           class="text-xs text-gray-500 dark:text-gray-400 hover:text-rose-400 font-medium flex items-center gap-1"
         >
-          Ver página completa <i class="fas fa-arrow-right text-[10px]" aria-hidden="true"></i>
+          Ver página completa <Icon name="arrow-right" class="text-[10px]" aria-hidden="true" />
         </a>
       </div>
 
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-rose-400 text-white flex items-center justify-center text-lg shadow-sm">
-          <i class={`fas ${selectedCategory.icon}`} aria-hidden="true"></i>
+          <Icon name={selectedCategory.icon} aria-hidden="true" />
         </div>
         <div>
           <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">{selectedCategory.name}</h2>
@@ -148,7 +149,7 @@
           onclick={clearSelection}
           class="inline-flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-rose-500 transition-colors py-2 px-4 rounded-xl border border-gray-200 dark:border-gray-700"
         >
-          <i class="fas fa-arrow-left" aria-hidden="true"></i>
+          <Icon name="arrow-left" aria-hidden="true" />
           Volver a todas las categorías
         </button>
       </div>

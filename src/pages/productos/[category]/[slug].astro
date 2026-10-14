@@ -3,6 +3,7 @@ import Layout from '../../../layouts/Layout.astro';
 import Nav from '../../../components/Nav.svelte';
 import Footer from '../../../components/Footer.astro';
 import GaleriaProducto from '../../../components/GaleriaProducto.svelte';
+import Icon from '../../../components/Icon.astro';
 import { getCollection } from 'astro:content';
 import { siteInfo } from '../../../data/siteInfo';
 import { formatPrice, cleanPrice } from '../../../lib/price';
@@ -79,7 +80,7 @@ const breadcrumbLd = {
         <div>
           {!data.disponible && (
             <div class="mb-4 inline-flex items-center gap-2 bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200 text-sm font-semibold px-4 py-1.5 rounded-full border border-amber-300 dark:border-amber-700">
-              <i class="fas fa-clock" aria-hidden="true"></i> Temporalmente no disponible
+              <Icon name="clock" aria-hidden="true" /> Temporalmente no disponible
             </div>
           )}
 
@@ -96,7 +97,7 @@ const breadcrumbLd = {
             rel="noopener noreferrer"
             class="inline-flex bg-[#25D366] hover:bg-[#1DA851] text-white px-8 py-3 rounded-full font-semibold items-center gap-2 transition-all duration-300 hover:-translate-y-0.5 shadow-md dark:shadow-gray-800 hover:shadow-lg dark:hover:shadow-gray-800"
           >
-            <i class="fab fa-whatsapp"></i> {data.disponible ? 'Consultar por WhatsApp' : 'Consultar disponibilidad'}
+            <Icon name="whatsapp" aria-hidden="true" /> {data.disponible ? 'Consultar por WhatsApp' : 'Consultar disponibilidad'}
           </a>
 
           {catSlug && (
@@ -105,7 +106,7 @@ const breadcrumbLd = {
                 href={`/productos/${catSlug}`}
                 class="text-rose-400 hover:text-rose-600 font-medium transition-colors"
               >
-                <i class="fas fa-arrow-left mr-2"></i> Ver todos los {catName.toLowerCase()}
+                <Icon name="arrow-left" class="mr-2" aria-hidden="true" /> Ver todos los {catName.toLowerCase()}
               </a>
             </div>
           )}

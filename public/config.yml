@@ -23,7 +23,17 @@ collections:
           widget: string,
           hint: 'Minúsculas, sin espacios ni acentos. Ej: alfajores. No lo cambies luego de creado o los productos vinculados quedarán huérfanos.',
         }
-      - { label: Icono (FontAwesome), name: icon, widget: string, default: fa-birthday-cake }
+      - label: Ícono
+        name: icon
+        widget: select
+        default: fa-cake-candles
+        options:
+          - { label: 'Torta / Cumpleaños', value: fa-cake-candles }
+          - { label: 'Helado / Postre', value: fa-ice-cream }
+          - { label: 'Galletita / Alfajor', value: fa-cookie }
+          - { label: 'Pan / Rodaja', value: fa-bread-slice }
+          - { label: 'Café / Taza', value: fa-mug-hot }
+          - { label: 'Regalo / Caja', value: fa-gift }
       - { label: Descripción, name: description, widget: text }
       - { label: Imagen, name: image, widget: image, choose_url: false }
 

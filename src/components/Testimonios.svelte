@@ -1,5 +1,6 @@
 <script>
   import { testimonials as testimonios } from '../data/testimonials';
+  import Icon from './Icon.svelte';
 
   let current = $state(0);
   const total = testimonios.length;
@@ -40,7 +41,7 @@
             <div class="bg-rose-50 dark:bg-gray-800 rounded-2xl p-8 md:p-10 text-center">
               <div class="flex justify-center gap-1 mb-6 text-amber-400 text-lg">
                 {#each Array(t.estrellas) as _, j}
-                  <i class="fas fa-star" aria-hidden="true"></i>
+                  <Icon name="star" aria-hidden="true" />
                 {/each}
               </div>
               <p class="text-gray-600 dark:text-gray-300 text-lg md:text-xl leading-relaxed italic">
@@ -59,14 +60,14 @@
         aria-label="Testimonio anterior"
         class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 md:-translate-x-5 w-10 h-10 bg-white dark:bg-gray-700 rounded-full shadow-md flex items-center justify-center text-gray-600 dark:text-gray-200 hover:text-rose-400 transition-colors"
       >
-        <i class="fas fa-chevron-left" aria-hidden="true"></i>
+        <Icon name="chevron-left" aria-hidden="true" />
       </button>
       <button
         onclick={next}
         aria-label="Siguiente testimonio"
         class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 md:translate-x-5 w-10 h-10 bg-white dark:bg-gray-700 rounded-full shadow-md flex items-center justify-center text-gray-600 dark:text-gray-200 hover:text-rose-400 transition-colors"
       >
-        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+        <Icon name="chevron-right" aria-hidden="true" />
       </button>
 
       <div class="flex justify-center gap-2 mt-8">
