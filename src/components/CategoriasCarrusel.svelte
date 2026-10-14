@@ -60,7 +60,7 @@
             <img
               src={c.imgSrc}
               alt={c.name}
-              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 will-change-transform"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               loading="lazy"
             />
           </div>
@@ -96,7 +96,7 @@
                 <img
                   src={c.imgSrc}
                   alt={c.name}
-                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 will-change-transform"
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   loading="lazy"
                 />
               </div>

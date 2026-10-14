@@ -87,7 +87,7 @@
                     <img
                       src={card.imgSrc}
                       alt={card.name}
-                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 will-change-transform opacity-0 transition-opacity duration-300"
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-0 transition-opacity duration-300"
                       loading="lazy"
                       onload={onImageLoad}
                     />
