@@ -1,4 +1,5 @@
 <script>
+  import Icon from './Icon.svelte';
   /**
    * Carrusel interactivo de categorías para la Home (Opción 1).
    * - En celular (<768px): Desplazamiento táctil con efecto asomo (peek effect) y snap centrado.
@@ -60,12 +61,12 @@
             <img
               src={c.imgSrc}
               alt={c.name}
-              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 will-change-transform"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               loading="lazy"
             />
           </div>
           <div class="w-10 h-10 bg-rose-400 rounded-full flex items-center justify-center text-white text-base shadow-md dark:shadow-gray-800 -mt-5 mx-auto relative z-10">
-            <i class={`fas ${c.icon}`} aria-hidden="true"></i>
+            <Icon name={c.icon} aria-hidden="true" />
           </div>
           <div class="p-4 text-center">
             <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 group-hover:text-rose-500 transition-colors">{c.name}</h3>
@@ -96,12 +97,12 @@
                 <img
                   src={c.imgSrc}
                   alt={c.name}
-                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 will-change-transform"
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   loading="lazy"
                 />
               </div>
               <div class="w-10 h-10 bg-rose-400 rounded-full flex items-center justify-center text-white text-base shadow-md dark:shadow-gray-800 -mt-5 mx-auto relative z-10">
-                <i class={`fas ${c.icon}`} aria-hidden="true"></i>
+                <Icon name={c.icon} aria-hidden="true" />
               </div>
               <div class="p-4 text-center">
                 <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 group-hover:text-rose-500 transition-colors">{c.name}</h3>
@@ -120,7 +121,7 @@
         aria-label="Categorías anteriores"
         class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 lg:-translate-x-3 w-10 h-10 bg-white dark:bg-gray-700 rounded-full shadow-lg flex items-center justify-center text-gray-700 dark:text-gray-200 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-gray-600 transition-all z-20 border border-gray-100 dark:border-gray-600 cursor-pointer"
       >
-        <i class="fas fa-chevron-left text-sm" aria-hidden="true"></i>
+        <Icon name="chevron-left" class="text-sm" aria-hidden="true" />
       </button>
 
       <button
@@ -129,7 +130,7 @@
         aria-label="Categorías siguientes"
         class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 lg:translate-x-3 w-10 h-10 bg-white dark:bg-gray-700 rounded-full shadow-lg flex items-center justify-center text-gray-700 dark:text-gray-200 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-gray-600 transition-all z-20 border border-gray-100 dark:border-gray-600 cursor-pointer"
       >
-        <i class="fas fa-chevron-right text-sm" aria-hidden="true"></i>
+        <Icon name="chevron-right" class="text-sm" aria-hidden="true" />
       </button>
 
       <div class="flex justify-center gap-2 mt-6">

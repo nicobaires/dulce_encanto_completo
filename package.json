@@ -21,6 +21,8 @@
     "@astrojs/sitemap": "^3.7.3",
     "@astrojs/svelte": "^7.2.5",
     "@astrojs/tailwind": "^6.0.2",
+    "@fontsource/playfair-display": "^5.3.0",
+    "@fontsource/poppins": "^5.3.0",
     "astro": "^5.18.2",
     "autoprefixer": "^10.5.2",
     "postcss": "^8.5.16",

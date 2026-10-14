@@ -1,5 +1,6 @@
 <script>
   import { siteInfo } from '../data/siteInfo';
+  import Icon from './Icon.svelte';
   let menuOpen = $state(false);
   let darkMode = $state(false);
   let activeId = $state('');
@@ -65,7 +66,7 @@
   <div class="max-w-6xl mx-auto px-4 py-4">
     <div class="flex justify-between items-center gap-10">
       <a href="/" class="flex items-center gap-3 flex-shrink-0">
-        <i class="fas fa-birthday-cake text-2xl text-rose-400" aria-hidden="true"></i>
+        <Icon name="birthday-cake" class="text-2xl text-rose-400" aria-hidden="true" />
         <div>
           <span class="text-lg font-bold text-gray-800 dark:text-gray-100">{siteInfo.brandName}</span>
           <p class="text-xs font-semibold text-rose-400 tracking-wider">PASTELERÍA ARTESANAL</p>
@@ -78,7 +79,7 @@
           aria-label="Alternar modo oscuro"
           class="text-gray-600 dark:text-gray-300 hover:text-rose-400 dark:hover:text-rose-400 text-lg transition-colors"
         >
-          <i class="fas {darkMode ? 'fa-sun' : 'fa-moon'}" aria-hidden="true"></i>
+          <Icon name={darkMode ? 'sun' : 'moon'} aria-hidden="true" />
         </button>
         <button
           onclick={() => menuOpen = !menuOpen}
@@ -86,7 +87,7 @@
           aria-expanded={menuOpen}
           class="md:hidden text-gray-700 dark:text-gray-300 text-2xl p-1"
         >
-          <i class="fas {menuOpen ? 'fa-times' : 'fa-bars'}" aria-hidden="true"></i>
+          <Icon name={menuOpen ? 'times' : 'bars'} aria-hidden="true" />
         </button>
       </div>
 

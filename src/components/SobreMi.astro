@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import ingredientesImg from '../assets/images/img_ingredientes.webp';
+import Icon from './Icon.astro';
 import { siteInfo } from '../data/siteInfo';
 ---
 
@@ -16,21 +17,21 @@ import { siteInfo } from '../data/siteInfo';
         <p class="text-gray-700 dark:text-gray-200 mb-6 leading-relaxed">Soy pastelera apasionada por los detalles y los sabores caseros. Cada receta la preparo con dedicación para que disfrutes de productos únicos y hechos con amor.</p>
         <div class="space-y-5 mb-8">
           <div class="flex gap-4 items-start">
-            <i class="fas fa-star text-2xl text-rose-400 flex-shrink-0 mt-1" aria-hidden="true"></i>
+            <Icon name="star" class="text-2xl text-rose-400 flex-shrink-0 mt-1" aria-hidden="true" />
             <div>
               <h4 class="font-semibold text-gray-800 dark:text-gray-100 mb-1">Ingredientes seleccionados</h4>
               <p class="text-sm text-gray-600 dark:text-gray-300">Calidad y frescura en cada preparación.</p>
             </div>
           </div>
           <div class="flex gap-4 items-start">
-            <i class="fas fa-heart text-2xl text-rose-400 flex-shrink-0 mt-1" aria-hidden="true"></i>
+            <Icon name="heart" class="text-2xl text-rose-400 flex-shrink-0 mt-1" aria-hidden="true" />
             <div>
               <h4 class="font-semibold text-gray-800 dark:text-gray-100 mb-1">Hecho con amor</h4>
               <p class="text-sm text-gray-600 dark:text-gray-300">Cada producto es elaborado de manera artesanal.</p>
             </div>
           </div>
           <div class="flex gap-4 items-start">
-            <i class="fas fa-calendar text-2xl text-rose-400 flex-shrink-0 mt-1" aria-hidden="true"></i>
+            <Icon name="calendar" class="text-2xl text-rose-400 flex-shrink-0 mt-1" aria-hidden="true" />
             <div>
               <h4 class="font-semibold text-gray-800 dark:text-gray-100 mb-1">Pedidos personalizados</h4>
               <p class="text-sm text-gray-600 dark:text-gray-300">Tortas y combos a tu medida.</p>
@@ -38,7 +39,7 @@ import { siteInfo } from '../data/siteInfo';
           </div>
         </div>
         <a href="/#productos" aria-label="Descubrí mis productos artesanales" class="inline-flex bg-rose-400 hover:bg-rose-600 text-white px-8 py-3 rounded-full font-semibold items-center gap-2 transition-all duration-300 hover:-translate-y-0.5 shadow-md dark:shadow-gray-800 hover:shadow-lg dark:hover:shadow-gray-800">
-          Descubrí mis productos <i class="fas fa-arrow-right" aria-hidden="true"></i>
+          Descubrí mis productos <Icon name="arrow-right" aria-hidden="true" />
         </a>
       </div>
     </div>

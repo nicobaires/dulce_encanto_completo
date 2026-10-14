@@ -1,0 +1,32 @@
+---
+import { icons, normalizeIconName } from '../lib/icons';
+
+export interface Props {
+  name: string;
+  class?: string;
+  'aria-hidden'?: boolean | 'true' | 'false';
+  [key: string]: any;
+}
+
+const { name, class: className = '', 'aria-hidden': ariaHidden = true, ...rest } = Astro.props;
+
+const key = normalizeIconName(name);
+const icon = icons[key];
+---
+
+{icon ? (
+  <svg
+    viewBox={icon.viewBox}
+    fill="currentColor"
+    aria-hidden={ariaHidden ? 'true' : undefined}
+    class={`inline-block w-[1em] h-[1em] align-[-0.125em] fill-current shrink-0 ${className}`}
+    {...rest}
+  >
+    {icon.paths.map((d) => (
+      <path d={d} />
+    ))}
+  </svg>
+) : (
+  <span class={className}>{name}</span>
+)}
+

@@ -1,5 +1,6 @@
 <script>
   import { buildWaLink } from '../lib/whatsapp';
+  import Icon from './Icon.svelte';
   let nombre = $state('');
   let email = $state('');
   let asunto = $state('');
@@ -117,7 +118,7 @@
           disabled={!valido}
           class="w-full py-3 rounded-xl font-semibold text-white transition-all duration-300 {valido ? 'bg-green-500 hover:bg-green-600 shadow-md dark:shadow-gray-800 hover:shadow-lg dark:hover:shadow-gray-800 hover:-translate-y-0.5 flex items-center justify-center gap-2' : 'bg-gray-300 cursor-not-allowed'}"
         >
-          <i class="fab fa-whatsapp" aria-hidden="true"></i>
+          <Icon name="whatsapp" aria-hidden="true" />
           Enviar por WhatsApp
         </button>
       </form>

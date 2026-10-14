@@ -1,5 +1,6 @@
 <script>
   import { formatPrice } from '../lib/price';
+  import Icon from './Icon.svelte';
 
   let { cards } = $props();
   let current = $state(0);
@@ -87,7 +88,7 @@
                     <img
                       src={card.imgSrc}
                       alt={card.name}
-                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 will-change-transform opacity-0 transition-opacity duration-300"
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-0 transition-opacity duration-300"
                       loading="lazy"
                       onload={onImageLoad}
                     />
@@ -111,14 +112,14 @@
             aria-label="Anterior"
             class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 md:-translate-x-5 w-10 h-10 bg-white dark:bg-gray-700 rounded-full shadow-md flex items-center justify-center text-gray-600 dark:text-gray-200 hover:text-rose-400 transition-colors"
           >
-            <i class="fas fa-chevron-left" aria-hidden="true"></i>
+            <Icon name="chevron-left" aria-hidden="true" />
           </button>
           <button
             onclick={next}
             aria-label="Siguiente"
             class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 md:translate-x-5 w-10 h-10 bg-white dark:bg-gray-700 rounded-full shadow-md flex items-center justify-center text-gray-600 dark:text-gray-200 hover:text-rose-400 transition-colors"
           >
-            <i class="fas fa-chevron-right" aria-hidden="true"></i>
+            <Icon name="chevron-right" aria-hidden="true" />
           </button>
 
           <div class="flex justify-center gap-2 mt-8">
