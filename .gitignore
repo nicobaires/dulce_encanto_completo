@@ -3,3 +3,6 @@ dist/
 .astro/
 personal.md
 consola.md
+
+# Local Netlify folder
+.netlify
